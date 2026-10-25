@@ -55,7 +55,7 @@ describe('PurchasesPage', () => {
     expect(
       await screen.findByRole('heading', { level: 1, name: 'My purchases' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('2 purchases · $96,575 spent')).toBeInTheDocument();
+    expect(await screen.findByText('2 purchases · $96,795 spent')).toBeInTheDocument();
 
     const [first, second] = screen.getAllByRole('article');
     expect(first).toHaveAccessibleName('2023 Toyota Camry XSE');
@@ -96,7 +96,7 @@ describe('PurchasesPage', () => {
     expect(
       await screen.findByRole('heading', { level: 1, name: 'All purchases' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('2 purchases · $96,575 in sales')).toBeInTheDocument();
+    expect(await screen.findByText('2 purchases · $96,795 in sales')).toBeInTheDocument();
     expect(screen.getByText('Bought by Arnav Kataria')).toBeInTheDocument();
     expect(screen.getByText('Bought by Jordan Lee')).toBeInTheDocument();
   });

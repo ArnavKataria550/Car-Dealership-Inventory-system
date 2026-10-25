@@ -5,6 +5,7 @@ import { AdminPage } from '../pages/AdminPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { LoginPage } from '../pages/LoginPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
+import { PurchasesPage } from '../pages/PurchasesPage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { VehicleDetailsPage } from '../pages/VehicleDetailsPage';
 import { AdminRoute, GuestOnlyRoute, ProtectedRoute } from './guards';
@@ -29,6 +30,7 @@ export const appRoutes: RouteObject[] = [
         children: [
           { path: '/', element: <InventoryPage /> },
           { path: '/vehicles/:id', element: <VehicleDetailsPage /> },
+          { path: '/purchases', element: <PurchasesPage /> },
           {
             element: <AdminRoute />,
             children: [{ path: '/admin', element: <AdminPage /> }],

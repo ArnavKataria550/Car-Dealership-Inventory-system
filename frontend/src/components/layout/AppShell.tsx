@@ -25,6 +25,9 @@ export function AppShell() {
             <NavLink to="/" end className={navLinkClass}>
               Inventory
             </NavLink>
+            <NavLink to="/purchases" className={navLinkClass}>
+              Purchases
+            </NavLink>
             {isAdmin && (
               <NavLink to="/admin" className={navLinkClass}>
                 Admin
