@@ -4,12 +4,12 @@ A full-stack web application for managing a car dealership's vehicle inventory.
 
 ## Tech Stack
 
-| Layer    | Technology                                   |
-| -------- | -------------------------------------------- |
-| Backend  | Node.js, TypeScript, Express                 |
-| Database | PostgreSQL via Prisma ORM                    |
-| Frontend | React, Vite, Tailwind CSS                    |
-| Testing  | Vitest/Jest + Supertest (backend), Vitest + React Testing Library (frontend) |
+| Layer    | Technology                                                              |
+| -------- | ----------------------------------------------------------------------- |
+| Backend  | Node.js, TypeScript, Express                                            |
+| Database | PostgreSQL via Prisma ORM                                               |
+| Frontend | React, Vite, Tailwind CSS                                               |
+| Testing  | Vitest + Supertest (backend), Vitest + React Testing Library (frontend) |
 
 ## Status
 
