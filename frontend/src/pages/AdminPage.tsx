@@ -4,7 +4,7 @@ import { CATEGORY_LABELS, type Vehicle, type VehicleFilters } from '../api/vehic
 import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
 import { DeleteVehicleDialog } from '../features/admin/DeleteVehicleDialog';
-import { VehicleFormDialog } from '../features/admin/VehicleFormDialog';
+import { VehicleFormDialog, type VehicleFormTarget } from '../features/admin/VehicleFormDialog';
 import { StockBadge } from '../features/vehicles/StockBadge';
 import { useVehicles } from '../features/vehicles/useVehicles';
 import { vehicleTitle } from '../features/vehicles/vehicle-format';
@@ -14,10 +14,11 @@ const ALL_VEHICLES: VehicleFilters = {};
 
 /** Admin-only overview of the lot with tools to manage each listing. */
 export function AdminPage() {
-  const { status, vehicles, error, retry, removeVehicle, addVehicle } = useVehicles(ALL_VEHICLES);
+  const { status, vehicles, error, retry, removeVehicle, addVehicle, replaceVehicle } =
+    useVehicles(ALL_VEHICLES);
   const { showToast } = useToast();
   const [toDelete, setToDelete] = useState<Vehicle | null>(null);
-  const [adding, setAdding] = useState(false);
+  const [formTarget, setFormTarget] = useState<VehicleFormTarget>(null);
 
   return (
     <>
@@ -30,7 +31,7 @@ export function AdminPage() {
             <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">Admin dashboard</h1>
             <p className="mt-3 text-stone-400">Add, edit, restock and remove listings.</p>
           </div>
-          <Button onClick={() => setAdding(true)}>
+          <Button onClick={() => setFormTarget('new')}>
             <span aria-hidden="true" className="text-lg leading-none">
               +
             </span>
@@ -81,7 +82,12 @@ export function AdminPage() {
               </thead>
               <tbody className="divide-y divide-stone-100">
                 {vehicles.map((vehicle) => (
-                  <VehicleRow key={vehicle.id} vehicle={vehicle} onDelete={setToDelete} />
+                  <VehicleRow
+                    key={vehicle.id}
+                    vehicle={vehicle}
+                    onEdit={setFormTarget}
+                    onDelete={setToDelete}
+                  />
                 ))}
               </tbody>
             </table>
@@ -98,12 +104,13 @@ export function AdminPage() {
       </div>
 
       <VehicleFormDialog
-        open={adding}
-        onClose={() => setAdding(false)}
-        onSaved={(created) => {
-          addVehicle(created);
-          setAdding(false);
-          showToast({ message: `Added ${vehicleTitle(created)}` });
+        target={formTarget}
+        onClose={() => setFormTarget(null)}
+        onSaved={(saved, created) => {
+          if (created) addVehicle(saved);
+          else replaceVehicle(saved);
+          setFormTarget(null);
+          showToast({ message: `${created ? 'Added' : 'Saved'} ${vehicleTitle(saved)}` });
         }}
       />
 
@@ -143,7 +150,13 @@ function InventoryStats({ vehicles }: { vehicles: Vehicle[] }) {
   );
 }
 
-function VehicleRow({ vehicle, onDelete }: { vehicle: Vehicle; onDelete: (v: Vehicle) => void }) {
+interface VehicleRowProps {
+  vehicle: Vehicle;
+  onEdit: (vehicle: Vehicle) => void;
+  onDelete: (vehicle: Vehicle) => void;
+}
+
+function VehicleRow({ vehicle, onEdit, onDelete }: VehicleRowProps) {
   const title = vehicleTitle(vehicle);
 
   return (
@@ -169,6 +182,14 @@ function VehicleRow({ vehicle, onDelete }: { vehicle: Vehicle; onDelete: (v: Veh
       </td>
       <td className="px-5 py-3">
         <div className="flex justify-end gap-2">
+          <button
+            type="button"
+            aria-label={`Edit ${title}`}
+            onClick={() => onEdit(vehicle)}
+            className="rounded-lg px-3 py-1.5 text-sm font-medium text-ink-800 transition hover:bg-stone-100"
+          >
+            Edit
+          </button>
           <button
             type="button"
             aria-label={`Delete ${title}`}

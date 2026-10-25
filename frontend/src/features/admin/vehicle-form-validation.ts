@@ -105,6 +105,17 @@ export function validateVehicleForm(
   };
 }
 
+/** Only the fields whose value differs from the original, for a partial update. */
+export function changedFields(original: VehicleInput, edited: VehicleInput): Partial<VehicleInput> {
+  const changes: Partial<VehicleInput> = {};
+  for (const key of Object.keys(edited) as (keyof VehicleInput)[]) {
+    if (edited[key] !== original[key]) {
+      (changes as Record<string, unknown>)[key] = edited[key];
+    }
+  }
+  return changes;
+}
+
 /** Maps an API field name (e.g. priceCents) to the form field that shows its error. */
 export function formFieldFor(apiField: string): VehicleFormField | undefined {
   const mapped = apiField === 'priceCents' ? 'price' : apiField;

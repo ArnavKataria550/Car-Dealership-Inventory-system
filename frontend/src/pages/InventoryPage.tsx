@@ -1,14 +1,17 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
-import type { VehicleFilters } from '../api/vehicles';
+import type { Vehicle, VehicleFilters } from '../api/vehicles';
 import { useAuth } from '../auth/auth-context';
+import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
+import { VehicleFormDialog } from '../features/admin/VehicleFormDialog';
 import { BRAND_NAME } from '../config/brand';
 import { SearchFilters } from '../features/vehicles/SearchFilters';
 import { useInventoryFilters } from '../features/vehicles/useInventoryFilters';
 import { usePurchase } from '../features/vehicles/usePurchase';
 import { useVehicles } from '../features/vehicles/useVehicles';
 import { VehicleCard } from '../features/vehicles/VehicleCard';
+import { vehicleTitle } from '../features/vehicles/vehicle-format';
 import { useDebouncedValue } from '../lib/useDebouncedValue';
 
 /** Wait this long after the last keystroke before searching. */
@@ -25,6 +28,8 @@ export function InventoryPage() {
 
   const { status, vehicles, error, retry, replaceVehicle } = useVehicles(activeFilters);
   const { purchase, isPurchasing } = usePurchase({ onPurchased: replaceVehicle, onStale: retry });
+  const { showToast } = useToast();
+  const [editing, setEditing] = useState<Vehicle | null>(null);
   const inStock = vehicles.filter((vehicle) => vehicle.quantity > 0).length;
 
   return (
@@ -71,11 +76,24 @@ export function InventoryPage() {
                 isAdmin={isAdmin}
                 purchasing={isPurchasing(vehicle.id)}
                 onPurchase={purchase}
+                onEdit={setEditing}
               />
             ))}
           </div>
         )}
       </section>
+
+      {isAdmin && (
+        <VehicleFormDialog
+          target={editing}
+          onClose={() => setEditing(null)}
+          onSaved={(saved) => {
+            replaceVehicle(saved);
+            setEditing(null);
+            showToast({ message: `Saved ${vehicleTitle(saved)}` });
+          }}
+        />
+      )}
     </>
   );
 }
