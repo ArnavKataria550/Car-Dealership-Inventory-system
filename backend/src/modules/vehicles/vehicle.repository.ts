@@ -9,4 +9,11 @@ export interface VehicleRepository {
   update(id: string, changes: VehicleChanges): Promise<Vehicle | null>;
   /** Removes the vehicle; resolves to false if no vehicle has that id. */
   delete(id: string): Promise<boolean>;
+  findById(id: string): Promise<Vehicle | null>;
+  /**
+   * Atomically lowers the stock by `quantity`, but only if at least that many
+   * units are available. Resolves to the updated vehicle, or null if the
+   * vehicle does not exist or has too few units (nothing is changed then).
+   */
+  decrementStockIfAvailable(id: string, quantity: number): Promise<Vehicle | null>;
 }

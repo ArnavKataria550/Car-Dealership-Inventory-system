@@ -50,4 +50,24 @@ export class PrismaVehicleRepository implements VehicleRepository {
     const { count } = await this.prisma.vehicle.deleteMany({ where: { id } });
     return count > 0;
   }
+
+  findById(id: string): Promise<Vehicle | null> {
+    return this.prisma.vehicle.findUnique({ where: { id } });
+  }
+
+  decrementStockIfAvailable(id: string, quantity: number): Promise<Vehicle | null> {
+    return this.prisma.$transaction(async (tx) => {
+      // One conditional UPDATE: the stock check and the decrement happen in the
+      // same statement, so two buyers can never both take the last unit.
+      const { count } = await tx.vehicle.updateMany({
+        where: { id, quantity: { gte: quantity } },
+        data: { quantity: { decrement: quantity } },
+      });
+      if (count === 0) {
+        return null;
+      }
+      // Our UPDATE holds the row lock until commit, so this read sees exactly our result.
+      return tx.vehicle.findUniqueOrThrow({ where: { id } });
+    });
+  }
 }

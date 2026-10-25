@@ -69,6 +69,13 @@ export const updateVehicleSchema = z
 
 export type UpdateVehicleBody = z.infer<typeof updateVehicleSchema>;
 
+/** Body of POST /api/vehicles/:id/purchase. Sending no body buys a single unit. */
+export const purchaseSchema = z.object({
+  quantity: wholeNumber('Quantity').min(1, 'Quantity must be at least 1').default(1),
+});
+
+export type PurchaseBody = z.infer<typeof purchaseSchema>;
+
 /** Treats a missing, empty or whitespace-only query value as "no filter". */
 function blankToUndefined(value: unknown): unknown {
   return typeof value === 'string' && value.trim() === '' ? undefined : value;

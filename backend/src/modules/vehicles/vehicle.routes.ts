@@ -6,6 +6,7 @@ import { validateQuery } from '../../middleware/validate-query.js';
 import type { VehicleController } from './vehicle.controller.js';
 import {
   createVehicleSchema,
+  purchaseSchema,
   searchVehiclesSchema,
   updateVehicleSchema,
 } from './vehicle.schemas.js';
@@ -30,6 +31,9 @@ export function createVehicleRouter(
   router.post('/', adminOnly, validateBody(createVehicleSchema), controller.create);
   router.put('/:id', adminOnly, validateBody(updateVehicleSchema), controller.update);
   router.delete('/:id', adminOnly, controller.delete);
+
+  // Inventory: any logged-in user may buy.
+  router.post('/:id/purchase', validateBody(purchaseSchema), controller.purchase);
 
   return router;
 }

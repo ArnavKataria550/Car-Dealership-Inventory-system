@@ -55,3 +55,14 @@ export class ConflictError extends AppError {
     super(409, 'CONFLICT', message);
   }
 }
+
+/** 409: a purchase asked for more units than are in stock. */
+export class InsufficientStockError extends AppError {
+  constructor(readonly available: number) {
+    super(
+      409,
+      'INSUFFICIENT_STOCK',
+      available === 0 ? 'This vehicle is out of stock' : `Only ${available} left in stock`,
+    );
+  }
+}

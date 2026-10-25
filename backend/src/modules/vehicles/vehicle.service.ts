@@ -1,4 +1,4 @@
-import { NotFoundError } from '../../errors/app-error.js';
+import { InsufficientStockError, NotFoundError } from '../../errors/app-error.js';
 import type { VehicleRepository } from './vehicle.repository.js';
 import type { NewVehicle, Vehicle, VehicleChanges, VehicleSearchFilters } from './vehicle.types.js';
 
@@ -43,5 +43,25 @@ export class VehicleService {
     if (!(await this.vehicles.delete(id))) {
       throw new NotFoundError('Vehicle not found');
     }
+  }
+
+  /**
+   * Buys `quantity` units, lowering the stock atomically.
+   *
+   * @throws NotFoundError if no vehicle has that id.
+   * @throws InsufficientStockError if fewer than `quantity` units are in stock.
+   */
+  async purchase(id: string, quantity: number): Promise<Vehicle> {
+    const updated = await this.vehicles.decrementStockIfAvailable(id, quantity);
+    if (updated) {
+      return updated;
+    }
+
+    // Nothing changed: work out why, for an accurate error.
+    const current = await this.vehicles.findById(id);
+    if (!current) {
+      throw new NotFoundError('Vehicle not found');
+    }
+    throw new InsufficientStockError(current.quantity);
   }
 }
