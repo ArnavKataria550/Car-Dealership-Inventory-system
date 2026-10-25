@@ -9,4 +9,9 @@ export class VehicleService {
   create(input: NewVehicle): Promise<Vehicle> {
     return this.vehicles.create(input);
   }
+
+  /** All listings, newest first, including ones that are out of stock. */
+  list(): Promise<Vehicle[]> {
+    return this.vehicles.findAll();
+  }
 }

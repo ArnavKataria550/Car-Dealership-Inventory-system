@@ -11,4 +11,9 @@ export class VehicleController {
     const vehicle = await this.vehicleService.create(req.body as CreateVehicleBody);
     res.status(201).json({ vehicle });
   };
+
+  list: RequestHandler = async (_req, res) => {
+    const vehicles = await this.vehicleService.list();
+    res.status(200).json({ vehicles });
+  };
 }

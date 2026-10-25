@@ -19,6 +19,7 @@ export function createVehicleRouter(
 
   router.use(authenticate);
 
+  router.get('/', controller.list);
   router.post('/', adminOnly, validateBody(createVehicleSchema), controller.create);
 
   return router;
