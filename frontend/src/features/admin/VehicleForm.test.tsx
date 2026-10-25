@@ -10,7 +10,7 @@ const nextYear = new Date().getFullYear() + 1;
 function renderForm(props: Partial<VehicleFormProps> = {}) {
   const onSubmit = vi.fn<VehicleFormProps['onSubmit']>().mockResolvedValue(undefined);
   render(<VehicleForm submitLabel="Add vehicle" onSubmit={onSubmit} {...props} />);
-  return { onSubmit, user: userEvent.setup() };
+  return { onSubmit, user: userEvent.setup({ delay: null }) };
 }
 
 const field = (label: string) => screen.getByLabelText(label);

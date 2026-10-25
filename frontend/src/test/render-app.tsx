@@ -35,5 +35,5 @@ export function logInAs(role: Role) {
 export function renderAppAt(path: string) {
   const router = createMemoryRouter(appRoutes, { initialEntries: [path] });
   render(<App router={router} />);
-  return { router, user: userEvent.setup() };
+  return { router, user: userEvent.setup({ delay: null }) };
 }

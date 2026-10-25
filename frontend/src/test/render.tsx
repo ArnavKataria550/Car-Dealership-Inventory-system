@@ -7,7 +7,7 @@ import { AuthProvider } from '../auth/AuthProvider';
 /** Renders a component inside AuthProvider and returns a user-event instance alongside RTL's result. */
 export function renderWithAuth(ui: ReactElement, options?: RenderOptions) {
   return {
-    user: userEvent.setup(),
+    user: userEvent.setup({ delay: null }),
     ...render(<AuthProvider>{ui}</AuthProvider>, options),
   };
 }

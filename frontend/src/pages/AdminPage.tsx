@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { CATEGORY_LABELS, type Vehicle, type VehicleFilters } from '../api/vehicles';
 import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
+import { LoadError } from '../components/ui/LoadError';
 import { DeleteVehicleDialog } from '../features/admin/DeleteVehicleDialog';
 import { RestockDialog } from '../features/admin/RestockDialog';
 import { VehicleFormDialog, type VehicleFormTarget } from '../features/admin/VehicleFormDialog';
@@ -45,19 +46,7 @@ export function AdminPage() {
       <div className="mx-auto -mt-12 max-w-7xl space-y-8 px-6 pb-16">
         <InventoryStats vehicles={vehicles} />
 
-        {status === 'error' && (
-          <div
-            role="alert"
-            className="flex items-center justify-between gap-4 rounded-2xl border border-red-200 bg-red-50 px-6 py-5 text-red-800"
-          >
-            <p>
-              <strong className="font-semibold">We couldn't load the inventory.</strong> {error}
-            </p>
-            <Button variant="dark" onClick={retry}>
-              Retry
-            </Button>
-          </div>
-        )}
+        {status === 'error' && <LoadError what="the inventory" message={error} onRetry={retry} />}
 
         <div className="overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-ink-950/5">
           <div className="overflow-x-auto">

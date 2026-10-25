@@ -4,6 +4,7 @@ import type { Vehicle, VehicleFilters } from '../api/vehicles';
 import { useAuth } from '../auth/auth-context';
 import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
+import { LoadError } from '../components/ui/LoadError';
 import { RestockDialog } from '../features/admin/RestockDialog';
 import { VehicleFormDialog } from '../features/admin/VehicleFormDialog';
 import { BRAND_NAME } from '../config/brand';
@@ -59,7 +60,7 @@ export function InventoryPage() {
       </div>
 
       <section className="mx-auto max-w-7xl px-6 py-10">
-        {status === 'error' && <LoadError message={error} onRetry={retry} />}
+        {status === 'error' && <LoadError what="the inventory" message={error} onRetry={retry} />}
         {status === 'loading' && vehicles.length === 0 && <SkeletonGrid />}
         {status === 'success' && vehicles.length === 0 && (
           <EmptyResults isFiltering={isFiltering} onClear={clear} />
@@ -162,23 +163,6 @@ function EmptyResults({ isFiltering, onClear }: { isFiltering: boolean; onClear:
           <p className="mt-2 text-stone-600">New stock is on its way. Check back soon.</p>
         </>
       )}
-    </div>
-  );
-}
-
-function LoadError({ message, onRetry }: { message: string | null; onRetry: () => void }) {
-  return (
-    <div
-      role="alert"
-      className="flex flex-col items-start gap-4 rounded-2xl border border-red-200 bg-red-50 px-6 py-5 text-red-800 sm:flex-row sm:items-center sm:justify-between"
-    >
-      <p>
-        <strong className="font-semibold">We couldn't load the inventory.</strong>{' '}
-        {message ?? 'Please try again.'}
-      </p>
-      <Button variant="dark" onClick={onRetry}>
-        Retry
-      </Button>
     </div>
   );
 }
