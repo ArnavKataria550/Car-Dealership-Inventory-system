@@ -13,7 +13,12 @@ export default defineConfig(
   tseslint.configs.recommended,
   {
     rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      // A leading underscore marks a value that is deliberately unused, e.g. a field
+      // destructured away: `const { id: _id, ...rest } = vehicle`.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
+      ],
     },
   },
   {
