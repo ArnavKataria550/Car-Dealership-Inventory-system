@@ -26,3 +26,16 @@ export interface Vehicle {
 
 /** Fields a client may set when creating a listing (id and timestamps are server-owned). */
 export type NewVehicle = Omit<Vehicle, 'id' | 'createdAt' | 'updatedAt'>;
+
+/** Search criteria; every field is optional and present ones are combined with AND. */
+export interface VehicleSearchFilters {
+  /** Case-insensitive partial match. */
+  make?: string;
+  /** Case-insensitive partial match. */
+  model?: string;
+  category?: Category;
+  /** Inclusive lower bound. */
+  minPriceCents?: number;
+  /** Inclusive upper bound. */
+  maxPriceCents?: number;
+}

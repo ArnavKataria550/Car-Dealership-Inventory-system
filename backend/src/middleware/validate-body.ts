@@ -1,7 +1,8 @@
 import type { RequestHandler } from 'express';
 import type { z } from 'zod';
 
-import { ValidationError, type FieldError } from '../errors/app-error.js';
+import { ValidationError } from '../errors/app-error.js';
+import { toFieldErrors } from './zod-field-errors.js';
 
 /**
  * Validates `req.body` against a Zod schema. On success the body is replaced
@@ -19,11 +20,4 @@ export function validateBody(schema: z.ZodType): RequestHandler {
     req.body = result.data;
     next();
   };
-}
-
-function toFieldErrors(error: z.ZodError): FieldError[] {
-  return error.issues.map((issue) => ({
-    field: issue.path.join('.'),
-    message: issue.message,
-  }));
 }

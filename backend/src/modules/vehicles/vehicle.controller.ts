@@ -1,6 +1,6 @@
 import type { RequestHandler } from 'express';
 
-import type { CreateVehicleBody } from './vehicle.schemas.js';
+import type { CreateVehicleBody, SearchVehiclesQuery } from './vehicle.schemas.js';
 import type { VehicleService } from './vehicle.service.js';
 
 /** Translates HTTP requests into VehicleService calls. Bodies are pre-validated by the router. */
@@ -14,6 +14,11 @@ export class VehicleController {
 
   list: RequestHandler = async (_req, res) => {
     const vehicles = await this.vehicleService.list();
+    res.status(200).json({ vehicles });
+  };
+
+  search: RequestHandler = async (_req, res) => {
+    const vehicles = await this.vehicleService.search(res.locals.query as SearchVehiclesQuery);
     res.status(200).json({ vehicles });
   };
 }

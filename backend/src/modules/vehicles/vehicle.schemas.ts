@@ -22,15 +22,18 @@ function wholeNumber(label: string) {
     .max(MAX_INT32, `${label} is too large`);
 }
 
+/** A category in any letter case ("suv", "Suv"), normalised to the stored upper-case value. */
+const categorySchema = z
+  .string({ error: 'Category is required' })
+  .trim()
+  .toUpperCase()
+  .pipe(z.enum(CATEGORIES, { error: `Category must be one of: ${CATEGORIES.join(', ')}` }));
+
 /** Body of POST /api/vehicles. Unknown keys (e.g. a client-chosen id) are stripped. */
 export const createVehicleSchema = z.object({
   make: requiredText('Make', 50),
   model: requiredText('Model', 50),
-  category: z
-    .string({ error: 'Category is required' })
-    .trim()
-    .toUpperCase()
-    .pipe(z.enum(CATEGORIES, { error: `Category must be one of: ${CATEGORIES.join(', ')}` })),
+  category: categorySchema,
   year: wholeNumber('Year')
     .min(FIRST_CAR_YEAR, `Year must be ${FIRST_CAR_YEAR} or later`)
     // Evaluated on every request, so the limit moves forward each January.
@@ -46,3 +49,41 @@ export const createVehicleSchema = z.object({
 });
 
 export type CreateVehicleBody = z.infer<typeof createVehicleSchema>;
+
+/** Treats a missing, empty or whitespace-only query value as "no filter". */
+function blankToUndefined(value: unknown): unknown {
+  return typeof value === 'string' && value.trim() === '' ? undefined : value;
+}
+
+function optionalSearchText() {
+  return z.preprocess(blankToUndefined, z.string().trim().max(50).optional());
+}
+
+function optionalPriceBound(label: string) {
+  return z.preprocess(
+    blankToUndefined,
+    z.coerce
+      .number({ error: `${label} must be a number` })
+      .int(`${label} must be a whole number of cents`)
+      .min(0, `${label} cannot be negative`)
+      .max(MAX_INT32, `${label} is too large`)
+      .optional(),
+  );
+}
+
+/** Query string of GET /api/vehicles/search. Every filter is optional. */
+export const searchVehiclesSchema = z
+  .object({
+    make: optionalSearchText(),
+    model: optionalSearchText(),
+    category: z.preprocess(blankToUndefined, categorySchema.optional()),
+    minPriceCents: optionalPriceBound('Minimum price'),
+    maxPriceCents: optionalPriceBound('Maximum price'),
+  })
+  .refine(
+    ({ minPriceCents, maxPriceCents }) =>
+      minPriceCents === undefined || maxPriceCents === undefined || minPriceCents <= maxPriceCents,
+    { path: ['minPriceCents'], message: 'Minimum price cannot be greater than maximum price' },
+  );
+
+export type SearchVehiclesQuery = z.infer<typeof searchVehiclesSchema>;
