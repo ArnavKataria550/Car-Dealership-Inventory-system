@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { Vehicle } from '../../api/vehicles';
@@ -7,12 +8,14 @@ import { buildVehicle } from '../../test/fixtures';
 import { VehicleCard } from './VehicleCard';
 
 function renderCard(vehicle: Vehicle, props: Partial<Parameters<typeof VehicleCard>[0]> = {}) {
-  const handlers = { onPurchase: vi.fn(), onEdit: vi.fn(), onRestock: vi.fn() };
-  render(<VehicleCard vehicle={vehicle} {...handlers} {...props} />);
-  return { ...handlers, user: userEvent.setup() };
+  const handlers = { onEdit: vi.fn(), onRestock: vi.fn() };
+  render(
+    <MemoryRouter>
+      <VehicleCard vehicle={vehicle} {...handlers} {...props} />
+    </MemoryRouter>,
+  );
+  return { ...handlers, user: userEvent.setup({ delay: null }) };
 }
-
-const purchaseButton = () => screen.getByRole('button', { name: /purchase|sold out|buying/i });
 
 describe('VehicleCard', () => {
   it('shows the year, make and model, category, colour, price and photo', () => {
@@ -29,41 +32,30 @@ describe('VehicleCard', () => {
     );
   });
 
+  it('links to the vehicle details page', () => {
+    renderCard(buildVehicle());
+
+    expect(screen.getByRole('link', { name: '2023 Toyota Camry XSE' })).toHaveAttribute(
+      'href',
+      '/vehicles/veh-camry',
+    );
+    expect(screen.getByText('View details')).toBeInTheDocument();
+  });
+
+  it('has no Purchase button: buying happens on the details page', () => {
+    renderCard(buildVehicle());
+
+    expect(screen.queryByRole('button', { name: /purchase/i })).not.toBeInTheDocument();
+  });
+
   it.each([
     [4, '4 in stock'],
     [2, 'Only 2 left'],
-    [1, 'Only 1 left'],
-  ])('with %i units shows "%s" and an enabled Purchase button', (quantity, badge) => {
+    [0, 'Sold out'],
+  ])('with %i units shows "%s"', (quantity, badge) => {
     renderCard(buildVehicle({ quantity }));
 
     expect(screen.getByText(badge)).toBeInTheDocument();
-    expect(purchaseButton()).toHaveTextContent('Purchase');
-    expect(purchaseButton()).toBeEnabled();
-  });
-
-  it('disables the Purchase button when the vehicle is out of stock', async () => {
-    const { onPurchase, user } = renderCard(buildVehicle({ quantity: 0 }));
-
-    expect(purchaseButton()).toBeDisabled();
-    expect(purchaseButton()).toHaveTextContent('Sold out');
-    await user.click(purchaseButton());
-    expect(onPurchase).not.toHaveBeenCalled();
-  });
-
-  it('buys the vehicle with one click', async () => {
-    const camry = buildVehicle();
-    const { onPurchase, user } = renderCard(camry);
-
-    await user.click(purchaseButton());
-
-    expect(onPurchase).toHaveBeenCalledWith(camry);
-  });
-
-  it('shows a disabled "Buying…" state while the purchase is in progress', () => {
-    renderCard(buildVehicle(), { purchasing: true });
-
-    expect(purchaseButton()).toBeDisabled();
-    expect(purchaseButton()).toHaveTextContent('Buying…');
   });
 
   it('hides the admin actions from regular users', () => {
