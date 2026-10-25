@@ -4,6 +4,7 @@ import { CATEGORY_LABELS, type Vehicle, type VehicleFilters } from '../api/vehic
 import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
 import { DeleteVehicleDialog } from '../features/admin/DeleteVehicleDialog';
+import { VehicleFormDialog } from '../features/admin/VehicleFormDialog';
 import { StockBadge } from '../features/vehicles/StockBadge';
 import { useVehicles } from '../features/vehicles/useVehicles';
 import { vehicleTitle } from '../features/vehicles/vehicle-format';
@@ -13,17 +14,28 @@ const ALL_VEHICLES: VehicleFilters = {};
 
 /** Admin-only overview of the lot with tools to manage each listing. */
 export function AdminPage() {
-  const { status, vehicles, error, retry, removeVehicle } = useVehicles(ALL_VEHICLES);
+  const { status, vehicles, error, retry, removeVehicle, addVehicle } = useVehicles(ALL_VEHICLES);
   const { showToast } = useToast();
   const [toDelete, setToDelete] = useState<Vehicle | null>(null);
+  const [adding, setAdding] = useState(false);
 
   return (
     <>
       <section className="bg-ink-950 text-paper">
-        <div className="mx-auto max-w-7xl px-6 pt-10 pb-20">
-          <p className="text-sm font-semibold tracking-widest text-accent uppercase">Dealership</p>
-          <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">Admin dashboard</h1>
-          <p className="mt-3 text-stone-400">Add, edit, restock and remove listings.</p>
+        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 pt-10 pb-20 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold tracking-widest text-accent uppercase">
+              Dealership
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">Admin dashboard</h1>
+            <p className="mt-3 text-stone-400">Add, edit, restock and remove listings.</p>
+          </div>
+          <Button onClick={() => setAdding(true)}>
+            <span aria-hidden="true" className="text-lg leading-none">
+              +
+            </span>
+            Add vehicle
+          </Button>
         </div>
       </section>
 
@@ -84,6 +96,16 @@ export function AdminPage() {
           )}
         </div>
       </div>
+
+      <VehicleFormDialog
+        open={adding}
+        onClose={() => setAdding(false)}
+        onSaved={(created) => {
+          addVehicle(created);
+          setAdding(false);
+          showToast({ message: `Added ${vehicleTitle(created)}` });
+        }}
+      />
 
       <DeleteVehicleDialog
         vehicle={toDelete}

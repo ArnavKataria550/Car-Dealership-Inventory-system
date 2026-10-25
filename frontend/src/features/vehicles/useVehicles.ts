@@ -67,6 +67,11 @@ export function useVehicles(filters: VehicleFilters) {
     );
   }, []);
 
+  /** Show a newly created vehicle first, matching the API's newest-first order. */
+  const addVehicle = useCallback((created: Vehicle) => {
+    setResult((current) => current && { ...current, vehicles: [created, ...current.vehicles] });
+  }, []);
+
   const retry = useCallback(() => setAttempt((count) => count + 1), []);
 
   return {
@@ -76,5 +81,6 @@ export function useVehicles(filters: VehicleFilters) {
     retry,
     replaceVehicle,
     removeVehicle,
+    addVehicle,
   };
 }
