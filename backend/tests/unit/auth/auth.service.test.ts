@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { ConflictError, UnauthorizedError } from '../../../src/errors/app-error.js';
 import { AuthService } from '../../../src/modules/auth/auth.service.js';
+import { JwtTokenService } from '../../../src/modules/auth/token.service.js';
 import { FakePasswordHasher } from '../../helpers/fakes/fake-password-hasher.js';
 import { InMemoryUserRepository } from '../../helpers/fakes/in-memory-user-repository.js';
 
@@ -14,10 +15,11 @@ let authService: AuthService;
 
 beforeEach(() => {
   users = new InMemoryUserRepository();
-  authService = new AuthService(users, new FakePasswordHasher(), {
-    jwtSecret: TEST_JWT_SECRET,
-    jwtExpiresIn: '1h',
-  });
+  authService = new AuthService(
+    users,
+    new FakePasswordHasher(),
+    new JwtTokenService(TEST_JWT_SECRET, '1h'),
+  );
 });
 
 describe('AuthService.register', () => {

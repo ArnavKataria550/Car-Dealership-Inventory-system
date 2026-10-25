@@ -32,9 +32,3 @@ export interface AuthResult {
   token: string;
   user: PublicUser;
 }
-
-export interface AuthTokenOptions {
-  jwtSecret: string;
-  /** Lifetime in `ms`-style notation, e.g. "1h". */
-  jwtExpiresIn: string;
-}

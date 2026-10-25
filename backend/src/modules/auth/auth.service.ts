@@ -1,14 +1,7 @@
-import jwt, { type SignOptions } from 'jsonwebtoken';
-
 import { ConflictError, UnauthorizedError } from '../../errors/app-error.js';
-import type {
-  AuthResult,
-  AuthTokenOptions,
-  LoginInput,
-  PublicUser,
-  RegisterInput,
-} from './auth.types.js';
+import type { AuthResult, LoginInput, PublicUser, RegisterInput } from './auth.types.js';
 import type { PasswordHasher } from './password-hasher.js';
+import type { TokenService } from './token.service.js';
 import type { UserRecord, UserRepository } from './user.repository.js';
 
 const INVALID_CREDENTIALS_MESSAGE = 'Invalid email or password';
@@ -21,7 +14,7 @@ export class AuthService {
   constructor(
     private readonly users: UserRepository,
     private readonly passwordHasher: PasswordHasher,
-    private readonly tokenOptions: AuthTokenOptions,
+    private readonly tokens: TokenService,
   ) {}
 
   /**
@@ -63,15 +56,10 @@ export class AuthService {
       throw new UnauthorizedError(INVALID_CREDENTIALS_MESSAGE);
     }
 
-    return { token: this.signToken(user), user: toPublicUser(user) };
-  }
-
-  private signToken(user: UserRecord): string {
-    return jwt.sign({ role: user.role }, this.tokenOptions.jwtSecret, {
-      algorithm: 'HS256',
-      subject: user.id,
-      expiresIn: this.tokenOptions.jwtExpiresIn as SignOptions['expiresIn'],
-    });
+    return {
+      token: this.tokens.sign({ id: user.id, role: user.role }),
+      user: toPublicUser(user),
+    };
   }
 
   private async getDummyPasswordHash(): Promise<string> {

@@ -4,9 +4,10 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { UnauthorizedError } from '../../../src/errors/app-error.js';
 import { createAuthenticate } from '../../../src/middleware/authenticate.js';
+import { JwtTokenService } from '../../../src/modules/auth/token.service.js';
 
 const SECRET = 'middleware-test-secret-at-least-32-chars';
-const authenticate = createAuthenticate(SECRET);
+const authenticate = createAuthenticate(new JwtTokenService(SECRET, '1h'));
 
 /** Runs the middleware against a fake request carrying the given Authorization header. */
 function runWith(authorization?: string) {
