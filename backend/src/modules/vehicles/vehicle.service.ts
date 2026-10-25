@@ -13,7 +13,7 @@ export class VehicleService {
 
   /** All listings, newest first, including ones that are out of stock. */
   list(): Promise<Vehicle[]> {
-    return this.vehicles.findAll();
+    return this.vehicles.search({});
   }
 
   /** Listings matching all given filters (none given: every listing). */

@@ -21,10 +21,6 @@ export class PrismaVehicleRepository implements VehicleRepository {
     return this.prisma.vehicle.create({ data });
   }
 
-  findAll(): Promise<Vehicle[]> {
-    return this.prisma.vehicle.findMany({ orderBy: NEWEST_FIRST });
-  }
-
   search(filters: VehicleSearchFilters): Promise<Vehicle[]> {
     // Prisma skips conditions whose value is undefined, so absent filters drop out.
     return this.prisma.vehicle.findMany({
