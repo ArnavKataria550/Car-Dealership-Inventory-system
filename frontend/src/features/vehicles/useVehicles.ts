@@ -61,6 +61,12 @@ export function useVehicles(filters: VehicleFilters) {
     );
   }, []);
 
+  const removeVehicle = useCallback((id: string) => {
+    setResult(
+      (current) => current && { ...current, vehicles: current.vehicles.filter((v) => v.id !== id) },
+    );
+  }, []);
+
   const retry = useCallback(() => setAttempt((count) => count + 1), []);
 
   return {
@@ -69,5 +75,6 @@ export function useVehicles(filters: VehicleFilters) {
     error: settled ? result.error : null,
     retry,
     replaceVehicle,
+    removeVehicle,
   };
 }

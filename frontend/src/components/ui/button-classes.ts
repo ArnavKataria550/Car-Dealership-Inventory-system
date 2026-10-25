@@ -1,9 +1,11 @@
-export type ButtonVariant = 'primary' | 'dark' | 'ghost';
+export type ButtonVariant = 'primary' | 'dark' | 'outline' | 'danger' | 'ghost';
 
 const VARIANTS: Record<ButtonVariant, string> = {
   // Amber is reserved for the main action on a screen.
   primary: 'bg-accent text-ink-950 hover:bg-accent-hover shadow-sm hover:shadow-md',
   dark: 'bg-ink-950 text-paper hover:bg-ink-800 shadow-sm hover:shadow-md',
+  outline: 'border border-stone-300 bg-white text-ink-900 hover:border-ink-950',
+  danger: 'bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md',
   ghost: 'bg-transparent text-current hover:bg-white/10',
 };
 

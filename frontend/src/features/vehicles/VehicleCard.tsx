@@ -3,7 +3,8 @@ import { useId, useState } from 'react';
 import { CATEGORY_LABELS, type Vehicle } from '../../api/vehicles';
 import { Button } from '../../components/ui/Button';
 import { formatPrice } from '../../lib/money';
-import { LOW_STOCK_THRESHOLD, vehicleTitle } from './vehicle-format';
+import { StockBadge } from './StockBadge';
+import { vehicleTitle } from './vehicle-format';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -38,7 +39,7 @@ export function VehicleCard({
         <span className="absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-ink-900 shadow-sm backdrop-blur">
           {CATEGORY_LABELS[vehicle.category]}
         </span>
-        <StockBadge quantity={vehicle.quantity} />
+        <StockBadge quantity={vehicle.quantity} className="absolute top-3 right-3" />
       </div>
 
       <div className="flex flex-1 flex-col p-5">
@@ -111,23 +112,6 @@ function VehiclePhoto({ src, title, dimmed }: { src: string; title: string; dimm
         dimmed ? 'opacity-60 grayscale-[60%]' : ''
       }`}
     />
-  );
-}
-
-function StockBadge({ quantity }: { quantity: number }) {
-  const [text, style] =
-    quantity === 0
-      ? ['Sold out', 'bg-ink-950 text-paper']
-      : quantity <= LOW_STOCK_THRESHOLD
-        ? [`Only ${quantity} left`, 'bg-accent text-ink-950']
-        : [`${quantity} in stock`, 'bg-white/90 text-ink-900 backdrop-blur'];
-
-  return (
-    <span
-      className={`absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-semibold shadow-sm ${style}`}
-    >
-      {text}
-    </span>
   );
 }
 
