@@ -61,11 +61,13 @@ export function useVehicles(filters: VehicleFilters) {
     );
   }, []);
 
+  const retry = useCallback(() => setAttempt((count) => count + 1), []);
+
   return {
     status,
     vehicles: result?.vehicles ?? [],
     error: settled ? result.error : null,
-    retry: () => setAttempt((count) => count + 1),
+    retry,
     replaceVehicle,
   };
 }

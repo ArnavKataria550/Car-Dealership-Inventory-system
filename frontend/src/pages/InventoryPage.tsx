@@ -2,6 +2,7 @@ import type { VehicleFilters } from '../api/vehicles';
 import { useAuth } from '../auth/auth-context';
 import { Button } from '../components/ui/Button';
 import { BRAND_NAME } from '../config/brand';
+import { usePurchase } from '../features/vehicles/usePurchase';
 import { VehicleCard } from '../features/vehicles/VehicleCard';
 import { useVehicles } from '../features/vehicles/useVehicles';
 
@@ -10,7 +11,11 @@ const NO_FILTERS: VehicleFilters = {};
 /** The storefront: every vehicle on the lot as a grid of cards. */
 export function InventoryPage() {
   const { isAdmin } = useAuth();
-  const { status, vehicles, error, retry } = useVehicles(NO_FILTERS);
+  const { status, vehicles, error, retry, replaceVehicle } = useVehicles(NO_FILTERS);
+  const { purchase, isPurchasing } = usePurchase({
+    onPurchased: replaceVehicle,
+    onStale: retry,
+  });
   const inStock = vehicles.filter((vehicle) => vehicle.quantity > 0).length;
 
   return (
@@ -44,9 +49,8 @@ export function InventoryPage() {
                 key={vehicle.id}
                 vehicle={vehicle}
                 isAdmin={isAdmin}
-                onPurchase={() => {
-                  // Wired up with the purchase flow in the next commit.
-                }}
+                purchasing={isPurchasing(vehicle.id)}
+                onPurchase={purchase}
               />
             ))}
           </div>
