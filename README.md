@@ -1,5 +1,7 @@
 # Car Dealership Inventory System
 
+[![CI](https://github.com/ArnavKataria550/Car-Dealership-Inventory-system/actions/workflows/ci.yml/badge.svg)](https://github.com/ArnavKataria550/Car-Dealership-Inventory-system/actions/workflows/ci.yml)
+
 A full-stack web application for managing a car dealership's vehicle inventory.
 
 ## Tech Stack
