@@ -6,6 +6,8 @@ import { errorHandler } from './middleware/error-handler.js';
 import { notFound } from './middleware/not-found.js';
 import { AuthController } from './modules/auth/auth.controller.js';
 import { createAuthRouter } from './modules/auth/auth.routes.js';
+import { PurchaseController } from './modules/purchases/purchase.controller.js';
+import { createPurchaseRouter } from './modules/purchases/purchase.routes.js';
 import { VehicleController } from './modules/vehicles/vehicle.controller.js';
 import { createVehicleRouter } from './modules/vehicles/vehicle.routes.js';
 
@@ -31,6 +33,10 @@ export function createApp(dependencies: AppDependencies = createDependencies()):
   app.use(
     '/api/vehicles',
     createVehicleRouter(new VehicleController(dependencies.vehicleService), authenticate),
+  );
+  app.use(
+    '/api/purchases',
+    createPurchaseRouter(new PurchaseController(dependencies.purchaseService), authenticate),
   );
 
   // Both must be registered after all routes, in this order.
