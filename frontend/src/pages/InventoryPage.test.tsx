@@ -61,7 +61,7 @@ describe('InventoryPage', () => {
       '2018 Ford Mustang Convertible',
     ]);
     const mustangCard = screen.getByRole('article', { name: '2018 Ford Mustang Convertible' });
-    expect(within(mustangCard).getByRole('button', { name: /sold out/i })).toBeDisabled();
+    expect(within(mustangCard).getByText('Sold out')).toBeInTheDocument();
   });
 
   it('summarises how many vehicles there are and how many are in stock', async () => {

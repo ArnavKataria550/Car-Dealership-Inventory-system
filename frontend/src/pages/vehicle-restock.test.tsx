@@ -75,21 +75,20 @@ describe('restocking a vehicle', () => {
     },
   );
 
-  it('from a sold-out inventory card: makes the car purchasable again', async () => {
+  it('from a sold-out inventory card: puts the car back in stock', async () => {
     serveLot();
     logInAs('ADMIN');
     const { user } = renderAppAt('/');
 
     const card = await screen.findByRole('article', { name: '2018 Ford Mustang Convertible' });
-    expect(within(card).getByRole('button', { name: 'Sold out' })).toBeDisabled();
+    expect(within(card).getByText('Sold out')).toBeInTheDocument();
     await user.click(within(card).getByRole('button', { name: /restock/i }));
     const input = within(screen.getByRole('dialog')).getByLabelText('Units to add');
     await user.clear(input);
     await user.type(input, '2');
     await user.click(screen.getByRole('button', { name: 'Add stock' }));
 
-    expect(await within(card).findByRole('button', { name: 'Purchase' })).toBeEnabled();
-    expect(within(card).getByText('Only 2 left')).toBeInTheDocument();
+    expect(await within(card).findByText('Only 2 left')).toBeInTheDocument();
   });
 
   it('shows a failed restock inside the dialog', async () => {

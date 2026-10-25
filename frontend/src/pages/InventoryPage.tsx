@@ -10,7 +10,6 @@ import { VehicleFormDialog } from '../features/admin/VehicleFormDialog';
 import { BRAND_NAME } from '../config/brand';
 import { SearchFilters } from '../features/vehicles/SearchFilters';
 import { useInventoryFilters } from '../features/vehicles/useInventoryFilters';
-import { usePurchase } from '../features/vehicles/usePurchase';
 import { useVehicles } from '../features/vehicles/useVehicles';
 import { VehicleCard } from '../features/vehicles/VehicleCard';
 import { vehicleTitle } from '../features/vehicles/vehicle-format';
@@ -29,7 +28,6 @@ export function InventoryPage() {
   const activeFilters = useMemo(() => JSON.parse(debouncedKey) as VehicleFilters, [debouncedKey]);
 
   const { status, vehicles, error, retry, replaceVehicle } = useVehicles(activeFilters);
-  const { purchase, isPurchasing } = usePurchase({ onPurchased: replaceVehicle, onStale: retry });
   const { showToast } = useToast();
   const [editing, setEditing] = useState<Vehicle | null>(null);
   const [restocking, setRestocking] = useState<Vehicle | null>(null);
@@ -77,8 +75,6 @@ export function InventoryPage() {
                 key={vehicle.id}
                 vehicle={vehicle}
                 isAdmin={isAdmin}
-                purchasing={isPurchasing(vehicle.id)}
-                onPurchase={purchase}
                 onEdit={setEditing}
                 onRestock={setRestocking}
               />
