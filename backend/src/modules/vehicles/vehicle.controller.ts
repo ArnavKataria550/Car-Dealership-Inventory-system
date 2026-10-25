@@ -30,6 +30,11 @@ export class VehicleController {
     res.status(200).json({ vehicles });
   };
 
+  getById: RequestHandler<{ id: string }> = async (req, res) => {
+    const vehicle = await this.vehicleService.getById(req.params.id);
+    res.status(200).json({ vehicle });
+  };
+
   update: RequestHandler<{ id: string }> = async (req, res) => {
     const vehicle = await this.vehicleService.update(req.params.id, req.body as UpdateVehicleBody);
     res.status(200).json({ vehicle });

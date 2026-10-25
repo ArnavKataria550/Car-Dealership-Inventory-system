@@ -16,6 +16,19 @@ export class VehicleService {
     return this.vehicles.search({});
   }
 
+  /**
+   * One listing by id.
+   *
+   * @throws NotFoundError if no vehicle has that id.
+   */
+  async getById(id: string): Promise<Vehicle> {
+    const vehicle = await this.vehicles.findById(id);
+    if (!vehicle) {
+      throw new NotFoundError('Vehicle not found');
+    }
+    return vehicle;
+  }
+
   /** Listings matching all given filters (none given: every listing). */
   search(filters: VehicleSearchFilters): Promise<Vehicle[]> {
     return this.vehicles.search(filters);

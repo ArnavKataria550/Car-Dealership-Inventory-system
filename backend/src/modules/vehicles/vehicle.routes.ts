@@ -29,6 +29,7 @@ export function createVehicleRouter(
   router.get('/', controller.list);
   // Must stay above any `/:id` route so "search" is never read as an id.
   router.get('/search', validateQuery(searchVehiclesSchema), controller.search);
+  router.get('/:id', controller.getById);
   router.post('/', adminOnly, validateBody(createVehicleSchema), controller.create);
   router.put('/:id', adminOnly, validateBody(updateVehicleSchema), controller.update);
   router.delete('/:id', adminOnly, controller.delete);
