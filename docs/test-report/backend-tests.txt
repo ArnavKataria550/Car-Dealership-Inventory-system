@@ -1,0 +1,231 @@
+
+ RUN  v5.0.5 <repo>/backend
+      Coverage enabled with v8
+
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 201: an admin creates a vehicle and gets it back with an id 343ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > defaults quantity to 0 when it is omitted 78ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > accepts the category in any letter case and trims text fields 83ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > ignores a client-supplied id 76ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > allows duplicate listings of the same car 88ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 401: rejects a request without a token, before validating the body 75ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 403: a regular user cannot add vehicles 74ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when make is missing 78ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when model is blank 72ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when make is longer than 50 characters 70ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when color is missing 71ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when category is not one of the allowed values 73ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when year is before 1886 72ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when year is after next year 70ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when year is not a whole number 70ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when priceCents is negative 70ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when priceCents is not a whole number 70ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when priceCents is a string 71ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when quantity is negative 80ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when quantity is not a whole number 71ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when imageUrl is missing 74ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when imageUrl is not a URL 108ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > 400: when imageUrl is not http(s) 99ms
+ ✓ tests/integration/vehicles.create.test.ts > POST /api/vehicles > accepts next year's models (2027) 118ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > returns every vehicle when no filters are given 201ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > matches make partially and case-insensitively 134ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > matches model partially and case-insensitively 130ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > filters by exact category, in any letter case 139ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > includes out-of-stock vehicles in the results 131ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > filters by minimum price (inclusive) 129ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > filters by maximum price (inclusive) 130ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > filters by a price range with both bounds inclusive 129ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > combines filters with AND 131ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > ignores empty filter values 117ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > returns an empty list when nothing matches 129ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > 400: when category is unknown 119ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > 400: when minPriceCents is negative 122ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > 400: when minPriceCents is not a number 120ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > 400: when maxPriceCents is not a whole number 122ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > 400: when minPriceCents is greater than maxPriceCents 122ms
+ ✓ tests/integration/vehicles.search.test.ts > GET /api/vehicles/search > 401: requires a token 131ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 200: updates only the given fields and leaves the rest unchanged 181ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > persists the change 118ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > updates several fields at once, normalising them like create does 120ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > can set the quantity to 0 137ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > refreshes updatedAt but never changes id or createdAt 127ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when the body is empty 119ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when the body has only unknown fields 122ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when priceCents is negative 109ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when category is unknown 120ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when make is blank 107ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when imageUrl is null 110ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 400: when year is too old 118ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 404: when no vehicle has that id 129ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 403: a regular user cannot edit vehicles 134ms
+ ✓ tests/integration/vehicles.update.test.ts > PUT /api/vehicles/:id > 401: requires a token 127ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 200: an admin adds stock and gets the updated vehicle back 171ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > accepts the maximum of 100 units in one request 118ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > makes an out-of-stock vehicle purchasable again 139ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 400: when quantity is missing 117ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 400: when quantity is 0 117ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 400: when quantity is negative 121ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 400: when quantity is above the 100-unit cap 112ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 400: when quantity is not a whole number 113ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 400: when quantity is a string 122ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 409: refuses a restock that would exceed the maximum storable stock 116ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 404: when no vehicle has that id 116ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 403: a regular user cannot restock 111ms
+ ✓ tests/integration/inventory.restock.test.ts > POST /api/vehicles/:id/restock > 401: requires a token 113ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 200: buys one unit when no quantity is given and returns the updated vehicle 181ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > buys the requested quantity 121ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > can buy the entire remaining stock, leaving it at 0 117ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > admins can purchase too 125ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 409: an out-of-stock vehicle cannot be purchased 116ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 409: cannot buy more than is in stock, and the stock is left unchanged 131ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 400: when quantity is 0 117ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 400: when quantity is negative 118ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 400: when quantity is not a whole number 112ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 400: when quantity is a string 113ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 404: when no vehicle has that id 106ms
+ ✓ tests/integration/inventory.purchase.test.ts > POST /api/vehicles/:id/purchase > 401: requires a token 108ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 201: creates the user and returns it without the password hash 167ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > persists the user with a bcrypt hash, not the plain password 116ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > ignores a role in the body: everyone registers as USER 113ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 409: rejects an email that is already registered, ignoring case 119ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 400: when name is missing 115ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 400: when name is blank 103ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 400: when email is invalid 99ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 400: when password is shorter than 8 characters 113ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 400: when password is longer than 72 characters 98ms
+ ✓ tests/integration/auth.register.test.ts > POST /api/auth/register > 400: rejects malformed JSON 98ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > creates an ADMIN account whose password is stored only as a hash 175ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > the seeded admin can log in and use admin-only endpoints 124ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > inserts the whole vehicle catalogue 120ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > replaces existing vehicles instead of adding to them 125ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > can be re-run: no duplicates, and the admin password is updated 132ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > leaves regular user accounts alone 130ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > refuses to run in production and changes nothing 96ms
+ ✓ tests/integration/seed.test.ts > seedDatabase > rejects an admin password shorter than 8 characters 101ms
+ ✓ tests/integration/inventory.purchase-records.test.ts > purchases are recorded > stores who bought what, the price paid and a snapshot of the car 175ms
+ ✓ tests/integration/inventory.purchase-records.test.ts > purchases are recorded > records the quantity bought 123ms
+ ✓ tests/integration/inventory.purchase-records.test.ts > purchases are recorded > records nothing when the purchase fails 132ms
+ ✓ tests/integration/inventory.purchase-records.test.ts > purchases are recorded > records exactly one order per successful sale under concurrency 355ms
+ ✓ tests/integration/inventory.purchase-records.test.ts > purchases are recorded > keeps the price paid after the listing price changes 122ms
+ ✓ tests/integration/inventory.purchase-records.test.ts > purchases are recorded > keeps the order when the listing is deleted 134ms
+ ✓ tests/integration/purchases.list.test.ts > GET /api/purchases > 401: requires a token 167ms
+ ✓ tests/integration/purchases.list.test.ts > GET /api/purchases > returns an empty list when nothing has been bought 133ms
+ ✓ tests/integration/purchases.list.test.ts > GET /api/purchases > a regular user sees only their own purchases, newest first 154ms
+ ✓ tests/integration/purchases.list.test.ts > GET /api/purchases > describes each purchase: car snapshot, price paid, total, date, buyer 132ms
+ ✓ tests/integration/purchases.list.test.ts > GET /api/purchases > an admin sees every purchase with who made it 130ms
+ ✓ tests/integration/purchases.list.test.ts > GET /api/purchases > still lists purchases of vehicles that were later deleted 127ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > 200: returns a JWT and the user without the password hash 203ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > issues a token signed with JWT_SECRET that identifies the user and expires in 1 hour 128ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > accepts the email in any letter case 118ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > 401: wrong password and unknown email give the same response 135ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > 400: when email is missing 115ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > 400: when email is invalid 113ms
+ ✓ tests/integration/auth.login.test.ts > POST /api/auth/login > 400: when password is missing 113ms
+ ✓ tests/integration/vehicles.delete.test.ts > DELETE /api/vehicles/:id > 204: an admin deletes the vehicle; the response has no body 170ms
+ ✓ tests/integration/vehicles.delete.test.ts > DELETE /api/vehicles/:id > removes only the targeted vehicle 122ms
+ ✓ tests/integration/vehicles.delete.test.ts > DELETE /api/vehicles/:id > the deleted vehicle no longer appears in the list 129ms
+ ✓ tests/integration/vehicles.delete.test.ts > DELETE /api/vehicles/:id > 404: when no vehicle has that id (including one already deleted) 131ms
+ ✓ tests/integration/vehicles.delete.test.ts > DELETE /api/vehicles/:id > 403: a regular user cannot delete vehicles 118ms
+ ✓ tests/integration/vehicles.delete.test.ts > DELETE /api/vehicles/:id > 401: requires a token 116ms
+ ✓ tests/integration/inventory.concurrency.test.ts > concurrent purchases > 10 buyers race for the last unit: exactly one succeeds, nobody oversells 327ms
+ ✓ tests/integration/inventory.concurrency.test.ts > concurrent purchases > 5 buyers each want 2 of 5 units: two succeed and 1 unit is left 208ms
+ ✓ tests/integration/vehicles.list.test.ts > GET /api/vehicles > 200: returns an empty list when there is no stock 192ms
+ ✓ tests/integration/vehicles.list.test.ts > GET /api/vehicles > 200: any logged-in user sees every vehicle, including out-of-stock ones 140ms
+ ✓ tests/integration/vehicles.list.test.ts > GET /api/vehicles > lists the newest vehicles first 158ms
+ ✓ tests/integration/vehicles.list.test.ts > GET /api/vehicles > returns every field the frontend needs to render a listing 158ms
+ ✓ tests/integration/vehicles.list.test.ts > GET /api/vehicles > 401: requires a token 134ms
+ ✓ tests/integration/prisma-user.repository.test.ts > PrismaUserRepository > turns a duplicate-email insert into ConflictError (the unique index is the final guard) 186ms
+ ✓ tests/integration/prisma-user.repository.test.ts > PrismaUserRepository > lets exactly one of two simultaneous sign-ups with the same email through 246ms
+ ✓ tests/integration/prisma-user.repository.test.ts > PrismaUserRepository > passes other database errors through unchanged 127ms
+ ✓ tests/integration/vehicles.get-one.test.ts > GET /api/vehicles/:id > 200: returns the vehicle 202ms
+ ✓ tests/integration/vehicles.get-one.test.ts > GET /api/vehicles/:id > 404: when no vehicle has that id 141ms
+ ✓ tests/integration/vehicles.get-one.test.ts > GET /api/vehicles/:id > 401: requires a token 146ms
+ ✓ tests/integration/vehicles.get-one.test.ts > GET /api/vehicles/:id > does not swallow /search 133ms
+ ✓ tests/integration/not-found.test.ts > unknown routes > 404 JSON for GET /api/does-not-exist 4ms
+ ✓ tests/integration/not-found.test.ts > unknown routes > 404 JSON for POST /api/auth/logout 3ms
+ ✓ tests/integration/not-found.test.ts > unknown routes > 404 JSON for GET / 3ms
+ ✓ tests/integration/not-found.test.ts > unknown routes > 404 JSON for an unknown path under an authenticated router 174ms
+ ✓ tests/unit/auth/bcrypt-password-hasher.test.ts > BcryptPasswordHasher > produces a bcrypt hash using the configured cost 3ms
+ ✓ tests/unit/auth/bcrypt-password-hasher.test.ts > BcryptPasswordHasher > produces a different hash each time (random salt) 5ms
+ ✓ tests/unit/auth/bcrypt-password-hasher.test.ts > BcryptPasswordHasher > confirms the correct password and rejects a wrong one 7ms
+ ✓ tests/integration/health.test.ts > GET /api/health > responds 200 with { status: "ok" } 4ms
+ ✓ tests/integration/health.test.ts > GET /api/health > responds with JSON 4ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > has 14 vehicles, exactly two in each category 1ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2023 Toyota Camry XSE passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2023 Honda Accord EX passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2023 Toyota RAV4 Prime XSE passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2022 Hyundai Tucson SEL passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2021 Volkswagen Golf R-Line passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2022 Honda Civic Sport Touring passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2021 Ford F-150 SuperCrew passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2019 Toyota Tacoma SR5 Access Cab passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2021 Mazda MX-5 Miata RF Grand Touring passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2018 Ford Mustang Convertible passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2021 Honda Odyssey EX-L passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2022 Chrysler Pacifica Touring L passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2023 Tesla Model 3 passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > 2022 Hyundai Ioniq 5 Ultimate passes the same validation as POST /api/vehicles 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > includes some out-of-stock vehicles so the disabled Purchase button can be seen 0ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > uses a distinct 1280px Wikimedia Commons image for every vehicle 1ms
+ ✓ tests/unit/seed/seed-vehicles.test.ts > seed vehicle catalogue > credits every photo with its author, an allowed license and the Commons source page 2ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > attaches the user from a valid Bearer token and calls next() 2ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects with 401 when there is no Authorization header 0ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects with 401 when the scheme is not Bearer 0ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects with 401 when the Bearer token is empty 0ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects with 401 when the token is not a JWT 0ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects a token signed with a different secret 1ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects an unsigned (alg: none) token 0ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects an expired token and says so 1ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects a validly signed token that has no subject 1ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > rejects a validly signed token that has an unknown role 0ms
+ ✓ tests/unit/middleware/authenticate.test.ts > authenticate middleware > does not call next() when authentication fails 1ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.register > creates a user and returns it without the password hash 1ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.register > stores a hash of the password, never the plain text 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.register > trims and lower-cases the email before saving 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.register > trims surrounding whitespace from the name 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.register > rejects an email that is already registered, ignoring case 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.register > always registers as USER, even if a role is smuggled into the input 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.login > returns a signed JWT carrying the user id and role 1ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.login > issues a token that expires after the configured lifetime 1ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.login > returns the user without the password hash 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.login > matches the email case-insensitively 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.login > rejects a wrong password with UnauthorizedError 0ms
+ ✓ tests/unit/auth/auth.service.test.ts > AuthService.login > gives the same error for an unknown email as for a wrong password 0ms
+ ✓ tests/unit/config/env.test.ts > parseEnv > applies defaults for optional settings 0ms
+ ✓ tests/unit/config/env.test.ts > parseEnv > coerces numeric settings from strings 0ms
+ ✓ tests/unit/config/env.test.ts > parseEnv > throws a readable error when DATABASE_URL is missing 1ms
+ ✓ tests/unit/config/env.test.ts > parseEnv > throws a readable error when JWT_SECRET is too short 0ms
+ ✓ tests/unit/config/env.test.ts > parseEnv > throws a readable error when NODE_ENV is unknown 1ms
+ ✓ tests/unit/config/env.test.ts > parseEnv > throws a readable error when BCRYPT_ROUNDS is too low 0ms
+ ✓ tests/unit/middleware/error-handler.test.ts > errorHandler > answers an AppError with its status, code and message 1ms
+ ✓ tests/unit/middleware/error-handler.test.ts > errorHandler > answers an unexpected error with a generic 500 that leaks nothing 1ms
+ ✓ tests/unit/middleware/error-handler.test.ts > errorHandler > treats a plain SyntaxError (not from body parsing) as unexpected 0ms
+ ✓ tests/unit/middleware/require-role.test.ts > requireRole middleware > calls next() when the user has the required role 0ms
+ ✓ tests/unit/middleware/require-role.test.ts > requireRole middleware > 403: rejects an authenticated user without the required role 0ms
+ ✓ tests/unit/middleware/require-role.test.ts > requireRole middleware > accepts any one of several allowed roles 0ms
+ ✓ tests/unit/middleware/require-role.test.ts > requireRole middleware > 401: rejects a request that was never authenticated 0ms
+ ✓ tests/unit/middleware/require-role.test.ts > requireRole middleware > ForbiddenError maps to HTTP 403 with code FORBIDDEN 0ms
+
+ Test Files  24 passed (24)
+      Tests  202 passed (202)
+   Start at  21:24:36
+   Duration  19.87s (tests 94%, import 5%, transform 1%)
+
+JSON report written to <repo>/docs/test-report/backend-results.tmp.json
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   98.95 |     96.7 |     100 |   99.64 |                   
+ ...ules/purchases |      95 |       75 |     100 |     100 |                   
+  ...controller.ts |   83.33 |       50 |     100 |     100 | 12                
+ ...dules/vehicles |   98.23 |    93.54 |     100 |    99.1 |                   
+  ...repository.ts |      96 |     87.5 |     100 |      96 | 45                
+  ...controller.ts |   96.66 |       50 |     100 |     100 | 67                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 98.95% ( 285/288 )
+Branches     : 96.7% ( 88/91 )
+Functions    : 100% ( 99/99 )
+Lines        : 99.64% ( 282/283 )
+================================================================================

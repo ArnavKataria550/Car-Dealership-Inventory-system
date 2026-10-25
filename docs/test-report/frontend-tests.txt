@@ -1,0 +1,243 @@
+
+ RUN  v5.0.5 <repo>/frontend
+      Coverage enabled with v8
+
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > has a labelled field for every vehicle property 316ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > renders name, email and password fields with a password hint 568ms
+ ✓ src/features/auth/LoginForm.test.tsx > LoginForm > renders labelled email and password fields and a sign-in button 582ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > lists every missing field and makes no API call 203ms
+ ✓ src/app-flows.test.tsx > Drivewright app > shows the branded login page to a logged-out visitor 922ms
+ ✓ src/features/auth/LoginForm.test.tsx > LoginForm > shows what is missing and does not call the API when submitted empty 286ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > treats a whitespace-only name as missing 196ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > lists every missing field and does not submit 927ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > shows the full details of the vehicle with a way back to the inventory 1124ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > shows a loading message first 147ms
+ ✓ src/pages/AdminPage.test.tsx > AdminPage > summarises the inventory in stat tiles 979ms
+ ✓ src/features/auth/LoginForm.test.tsx > LoginForm > rejects an invalid email address before calling the API 545ms
+ ✓ src/pages/InventoryPage.test.tsx > InventoryPage > shows loading placeholders while the vehicles are being fetched 1157ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > requires a password of at least 8 characters 694ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > asks for confirmation before buying, and Cancel buys nothing 443ms
+ ✓ src/pages/InventoryPage.test.tsx > InventoryPage > shows a card for every vehicle, including sold-out ones 408ms
+ ✓ src/pages/InventoryPage.test.tsx > InventoryPage > summarises how many vehicles there are and how many are in stock 146ms
+ ✓ src/pages/AdminPage.test.tsx > AdminPage > lists every vehicle with its category, price and stock 703ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > buys one unit after confirming, updates the stock and confirms with a toast 384ms
+ ✓ src/features/auth/LoginForm.test.tsx > LoginForm > signs in with the trimmed email and reports the user 682ms
+ ✓ src/pages/InventoryPage.test.tsx > InventoryPage > explains when there are no vehicles at all 215ms
+ ✓ src/pages/vehicle-edit.test.tsx > editing a vehicle > from the admin table: sends only the changed fields and updates the row 2143ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > filters by make as the user types, sending one request after typing stops 2226ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > from the admin table: adds the units and updates the row 2123ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > disables Purchase when the vehicle is sold out 203ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > creates the account with trimmed values, logs in and reports the user 772ms
+ ✓ src/features/auth/LoginForm.test.tsx > LoginForm > shows the server's error, keeps the email and clears the password 527ms
+ ✓ src/pages/InventoryPage.test.tsx > InventoryPage > shows the error and recovers when Retry is pressed 410ms
+ ✓ src/pages/vehicle-edit.test.tsx > editing a vehicle > closes without a request when nothing was changed 555ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > explains when the last unit was sold meanwhile, and refreshes the stock 509ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > shows "Vehicle not found" for an unknown id 94ms
+ ✓ src/pages/AdminPage.test.tsx > AdminPage > asks for confirmation before deleting, and Cancel changes nothing 954ms
+ ✓ src/app-flows.test.tsx > Drivewright app > after signing in, returns the user to the page they originally asked for 2092ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > rejects "0" units without calling the API 718ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > shows a duplicate-email error on the email field 588ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > gives admins Edit and Restock on the details page 146ms
+ ✓ src/features/auth/LoginForm.test.tsx > LoginForm > disables the button and shows progress while signing in 392ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > rejects an invalid Year (1885) 2230ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > filters by model 963ms
+ ✓ src/pages/VehicleDetailsPage.test.tsx > VehicleDetailsPage > does not show admin actions to regular users 119ms
+ ✓ src/pages/vehicle-edit.test.tsx > editing a vehicle > from the inventory card shortcut: updates the card 800ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > shows field errors returned by the server next to their fields 456ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > rejects "101" units without calling the API 669ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > shows other failures in an alert 525ms
+ ✓ src/pages/AdminPage.test.tsx > AdminPage > deletes after confirmation, removes the row and confirms with a toast 962ms
+ ✓ src/pages/AdminPage.add.test.tsx > AdminPage: add a vehicle > creates a vehicle from the dialog, adds its row and confirms with a toast 3894ms
+ ✓ src/pages/vehicle-edit.test.tsx > editing a vehicle > keeps the dialog open with the error if saving fails 660ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > rejects "1.5" units without calling the API 617ms
+ ✓ src/app-flows.test.tsx > Drivewright app > greets a regular user by first name and hides the Admin link 1264ms
+ ✓ src/app-flows.test.tsx > Drivewright app > shows the Admin link to admins 92ms
+ ✓ src/pages/AdminPage.test.tsx > AdminPage > reports a failed delete and keeps the dialog open 495ms
+ ✓ src/features/auth/RegisterForm.test.tsx > RegisterForm > disables the button while the account is being created 554ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > filters by category with toggle chips, and "All" resets 1470ms
+ ✓ src/app-flows.test.tsx > Drivewright app > logs out from the navbar and returns to the login page 293ms
+ ✓ src/app-flows.test.tsx > Drivewright app > explains on the login page that the session expired 197ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > rejects "lots" units without calling the API 605ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > rejects an invalid Year (2028) 1752ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > from a sold-out inventory card: puts the car back in stock 499ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > filters by a price range entered in dollars 1058ms
+ ✓ src/pages/vehicle-restock.test.tsx > restocking a vehicle > shows a failed restock inside the dialog 503ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > flags an invalid price and leaves it out of the search 393ms
+ ✓ src/app-flows.test.tsx > Drivewright app > registers a new user and takes them straight to the inventory 1468ms
+ ✓ src/app-flows.test.tsx > Drivewright app > links from the register page back to sign in 47ms
+ ✓ src/app-flows.test.tsx > Drivewright app > shows a not-found page for unknown addresses 38ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > rejects an invalid Price (USD) (twenty grand) 1666ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > flags a minimum above the maximum 532ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > restores filters from the URL 150ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > says when nothing matches and lets the user clear every filter 724ms
+ ✓ src/pages/InventoryPage.search.test.tsx > inventory search and filters > only offers "Clear filters" while a filter is active 260ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > rejects an invalid Quantity (1.5) 1478ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > renders nothing while closed 114ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > rejects an invalid Image URL (ftp://images.example.test/car.jpg) 1815ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > is an accessible modal dialog named by its title 493ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > moves focus to the first focusable element inside 149ms
+ ✓ src/components/toast/ToastProvider.test.tsx > ToastProvider > announces a toast in a polite live region 624ms
+ ✓ src/components/toast/ToastProvider.test.tsx > ToastProvider > shows several toasts at once 152ms
+ ✓ src/components/toast/ToastProvider.test.tsx > ToastProvider > dismisses a toast automatically after 4 seconds 47ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > keeps Tab and Shift+Tab inside the dialog 496ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > starts logged out when nothing is stored 57ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > restores a saved, unexpired session on load 11ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > is linked from the navbar 905ms
+ ✓ src/components/toast/ToastProvider.test.tsx > ToastProvider > can be dismissed by hand 157ms
+ ✓ src/components/toast/ToastProvider.test.tsx > ToastProvider > useToast throws a clear error outside the provider 17ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > login stores the session and exposes the user 245ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > isAdmin is true for an ADMIN user 43ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > closes on Escape and returns focus to the button that opened it 146ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > a failed login rejects with the API error and stays logged out 71ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > register creates the account and then logs in automatically 25ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > logout clears the user and the stored session 5ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > logs out automatically when the token expires, with a message 18ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > lists a customer's purchases with what, when, how many and the total 306ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > closes when the backdrop is clicked, but not when the panel is 237ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > logs out when the server rejects the token, showing its message 104ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > the shared api client sends the current token 12ms
+ ✓ src/auth/AuthProvider.test.tsx > AuthProvider > useAuth throws a clear error outside AuthProvider 29ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > links to the car while it is still listed, and says when it is not 214ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > does not show buyer names to customers 121ms
+ ✓ src/components/ui/Modal.test.tsx > Modal > closes with the close button 187ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > shows the year, make and model, category, colour, price and photo 642ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > links to the vehicle details page 51ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > has no Purchase button: buying happens on the details page 15ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > with 4 units shows "4 in stock" 22ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > shows admins every sale with the buyer 90ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > invites a new customer to browse when there are no purchases 94ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > with 2 units shows "Only 2 left" 22ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > with 0 units shows "Sold out" 12ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > hides the admin actions from regular users 24ms
+ ✓ src/routes/guards.test.tsx > route guards > sends a logged-out visitor to /login, remembering the page they wanted 177ms
+ ✓ src/routes/guards.test.tsx > route guards > sends a logged-out visitor of /admin to /login as well 13ms
+ ✓ src/routes/guards.test.tsx > route guards > lets a logged-in user see protected pages 12ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > gives admins Edit and Restock shortcuts 175ms
+ ✓ src/routes/guards.test.tsx > route guards > shows a regular user a friendly "no access" page for /admin 487ms
+ ✓ src/routes/guards.test.tsx > route guards > lets an admin into /admin 9ms
+ ✓ src/routes/guards.test.tsx > route guards > redirects a logged-in user away from the login page 28ms
+ ✓ src/pages/PurchasesPage.test.tsx > PurchasesPage > shows a load error with Retry 195ms
+ ✓ src/api/client.test.ts > createApiClient > sends the bearer token and returns the parsed JSON body 185ms
+ ✓ src/api/client.test.ts > createApiClient > sends no Authorization header when there is no token 44ms
+ ✓ src/api/client.test.ts > createApiClient > sends bodies as JSON 16ms
+ ✓ src/api/client.test.ts > createApiClient > adds query parameters, skipping empty and undefined values 17ms
+ ✓ src/api/client.test.ts > createApiClient > resolves to undefined for 204 No Content 11ms
+ ✓ src/features/vehicles/VehicleCard.test.tsx > VehicleCard > shows a placeholder when the photo cannot be loaded 58ms
+ ✓ src/routes/guards.test.tsx > route guards > returns to the login page as soon as the user logs out 116ms
+ ✓ src/api/client.test.ts > createApiClient > turns the API's error envelope into an ApiError 15ms
+ ✓ src/api/client.test.ts > createApiClient > gives a generic ApiError when an error response is not JSON 20ms
+ ✓ src/api/client.test.ts > createApiClient > gives a friendly ApiError when the server cannot be reached 25ms
+ ✓ src/api/client.test.ts > createApiClient > calls onUnauthorized when a request made with a token is rejected with 401 51ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > rejects an invalid Make (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx) 2069ms
+ ✓ src/api/client.test.ts > createApiClient > does not call onUnauthorized for a 401 on a request sent without a token (wrong password) 17ms
+ ✓ src/pages/InventoryPage.navigation.test.tsx > inventory cards open the details page > clicking a card navigates to /vehicles/:id 1080ms
+ ✓ src/api/vehicles.test.ts > vehicles api > fetchVehicles uses GET /vehicles when no filter is set 150ms
+ ✓ src/api/vehicles.test.ts > vehicles api > fetchVehicles treats blank filters as no filters 13ms
+ ✓ src/api/vehicles.test.ts > vehicles api > fetchVehicles uses /vehicles/search with only the filters that are set 11ms
+ ✓ src/api/vehicles.test.ts > vehicles api > createVehicle posts the input and returns the created vehicle 28ms
+ ✓ src/api/vehicles.test.ts > vehicles api > updateVehicle sends only the given changes 12ms
+ ✓ src/api/vehicles.test.ts > vehicles api > deleteVehicle sends DELETE and resolves when the API answers 204 8ms
+ ✓ src/api/vehicles.test.ts > vehicles api > purchaseVehicle buys a single unit and returns the updated vehicle 12ms
+ ✓ src/api/vehicles.test.ts > vehicles api > restockVehicle sends the quantity and returns the updated vehicle 11ms
+ ✓ src/api/vehicles.test.ts > vehicles api > escapes ids in the URL 12ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > submits clean values, with the price converted to cents 1113ms
+ ✓ src/api/purchases.test.ts > fetchVehicle > gets one vehicle by id 110ms
+ ✓ src/api/purchases.test.ts > fetchPurchases > returns the purchases list 12ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > previews the photo once a valid image URL is entered 439ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > starts from an existing vehicle when editing 27ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > shows server field errors next to their fields 727ms
+ ✓ src/lib/money.test.ts > formatPrice > formats 3099500 cents as $30,995 4ms
+ ✓ src/lib/money.test.ts > formatPrice > formats 2999950 cents as $29,999.50 0ms
+ ✓ src/lib/money.test.ts > formatPrice > formats 0 cents as $0 0ms
+ ✓ src/lib/money.test.ts > formatPrice > formats 99 cents as $0.99 0ms
+ ✓ src/lib/money.test.ts > formatPrice > formats 12345678900 cents as $123,456,789 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "27999" as 2799900 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "27,999" as 2799900 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "27,999.5" as 2799950 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "27999.05" as 2799905 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "$27,999.99" as 2799999 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "  42  " as 4200 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > reads "0" as 0 cents 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "   " 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "abc" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "-5" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "12.345" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "1.2.3" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "12e3" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > rejects "$" 0ms
+ ✓ src/lib/money.test.ts > parseDollars > never suffers from floating-point rounding (0.29 dollars is exactly 29 cents) 0ms
+ ✓ src/lib/money.test.ts > centsToDollarInput > turns 2799900 cents into the editable value "27999" 0ms
+ ✓ src/lib/money.test.ts > centsToDollarInput > turns 2799950 cents into the editable value "27999.50" 0ms
+ ✓ src/lib/money.test.ts > centsToDollarInput > turns 5 cents into the editable value "0.05" 0ms
+ ✓ src/auth/session.test.ts > session storage > saves a session and loads it back with the expiry taken from the token 8ms
+ ✓ src/auth/session.test.ts > session storage > returns null when nothing is stored 1ms
+ ✓ src/auth/session.test.ts > session storage > discards an expired session and removes it from storage 1ms
+ ✓ src/auth/session.test.ts > session storage > discards stored data that is not JSON 1ms
+ ✓ src/auth/session.test.ts > session storage > discards stored data that has no token 1ms
+ ✓ src/auth/session.test.ts > session storage > discards stored data that has a token that is not a JWT 0ms
+ ✓ src/auth/session.test.ts > session storage > discards stored data that has a token without an expiry 0ms
+ ✓ src/auth/session.test.ts > session storage > discards stored data that has no user 0ms
+ ✓ src/auth/session.test.ts > session storage > discards stored data that has a user with an unknown role 0ms
+ ✓ src/auth/session.test.ts > session storage > refuses to save a token that has no expiry 3ms
+ ✓ src/auth/session.test.ts > session storage > clearSession removes the stored session 1ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > shows other failures in an alert 726ms
+ ✓ src/features/admin/VehicleForm.test.tsx > VehicleForm > disables the submit button while saving 541ms
+
+ Test Files  23 passed (23)
+      Tests  181 passed (181)
+   Start at  21:24:59
+   Duration  22.93s (environment 44%, tests 35%, setup 13%, import 7%, worker 1%, transform 1%)
+
+Environment  jsdom was created 23 times · 88.84s total, 44% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+JSON report written to <repo>/docs/test-report/frontend-results.tmp.json
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   96.43 |    93.19 |   95.37 |   96.75 |                   
+ src/api           |     100 |    97.22 |     100 |     100 |                   
+  client.ts        |     100 |    96.55 |     100 |     100 | 104               
+ src/auth          |   97.22 |      100 |      95 |   96.92 |                   
+  AuthProvider.tsx |   96.77 |      100 |    92.3 |   96.42 | 77                
+  session.ts       |   97.05 |      100 |     100 |   96.66 | 59                
+ ...ponents/layout |     100 |    83.33 |     100 |     100 |                   
+  AppShell.tsx     |     100 |    83.33 |     100 |     100 | 14                
+ src/components/ui |   98.11 |    97.18 |     100 |     100 |                   
+  LoadError.tsx    |     100 |       50 |     100 |     100 | 21                
+  Modal.tsx        |   97.36 |    96.55 |     100 |     100 | 114               
+ ...features/admin |   96.55 |    92.72 |   96.15 |   97.61 |                   
+  ...cleDialog.tsx |     100 |     87.5 |     100 |     100 | 60                
+  ...ockDialog.tsx |     100 |    93.33 |     100 |     100 | 70                
+  VehicleForm.tsx  |    92.3 |    78.57 |      90 |   90.32 | 64-65,132         
+  ...validation.ts |   96.55 |    94.54 |     100 |     100 | 79,86,122         
+ src/features/auth |   95.29 |    85.29 |     100 |   94.52 |                   
+  LoginForm.tsx    |     100 |    83.33 |     100 |     100 | 39                
+  RegisterForm.tsx |   94.44 |    83.33 |     100 |   93.75 | 56-57             
+  validation.ts    |      92 |     87.5 |     100 |   90.47 | 54,65             
+ ...ures/purchases |     100 |    78.57 |     100 |     100 |                   
+  usePurchases.ts  |     100 |    78.57 |     100 |     100 | 23-27             
+ ...tures/vehicles |   98.36 |    90.38 |     100 |     100 |                   
+  ...aseDialog.tsx |     100 |    72.72 |     100 |     100 | 71-74             
+  ...oryFilters.ts |   96.29 |    97.14 |     100 |     100 | 41                
+  useVehicle.ts    |   95.65 |    77.77 |     100 |     100 | 30-33,38-39       
+  useVehicles.ts   |     100 |     90.9 |     100 |     100 | 39-40             
+ src/pages         |   88.57 |    93.33 |   82.69 |   87.75 |                   
+  AdminPage.tsx    |   97.22 |    83.33 |   94.44 |   96.87 | 111               
+  ...ntoryPage.tsx |    92.3 |      100 |   83.33 |   91.66 | 90,98             
+  ...hasesPage.tsx |     100 |    96.29 |     100 |     100 | 52                
+  ...tailsPage.tsx |   66.66 |       88 |   53.84 |   66.66 | 125-132,155-167   
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 96.43% ( 703/729 )
+Branches     : 93.19% ( 493/529 )
+Functions    : 95.37% ( 227/238 )
+Lines        : 96.75% ( 627/648 )
+================================================================================
+stderr | src/routes/guards.test.tsx > route guards > returns to the login page as soon as the user logs out
+The current testing environment is not configured to support act(...)
+
