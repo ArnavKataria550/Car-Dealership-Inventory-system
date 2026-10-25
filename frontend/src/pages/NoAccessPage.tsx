@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { ButtonLink } from '../components/ui/Button';
 
 /** Shown to signed-in users who open an admin-only page. */
 export function NoAccessPage() {
@@ -12,12 +12,9 @@ export function NoAccessPage() {
         This area is only for dealership admins. If you think this is a mistake, contact your
         administrator.
       </p>
-      <Link
-        to="/"
-        className="mt-8 rounded-xl bg-ink-950 px-5 py-3 text-sm font-semibold text-paper shadow-sm transition hover:-translate-y-px hover:bg-ink-800 hover:shadow-md"
-      >
+      <ButtonLink to="/" variant="dark" className="mt-8">
         Back to inventory
-      </Link>
+      </ButtonLink>
     </section>
   );
 }
