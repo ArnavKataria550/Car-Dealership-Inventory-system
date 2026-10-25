@@ -62,9 +62,11 @@ describe('authenticate middleware', () => {
   });
 
   it('rejects an expired token and says so', () => {
-    const expired = signToken(
-      { role: 'USER', exp: Math.floor(Date.now() / 1000) - 10 },
-      { subject: 'user-42', expiresIn: undefined },
+    // Signed directly: `exp` in the payload cannot be combined with the helper's expiresIn.
+    const expired = jwt.sign(
+      { sub: 'user-42', role: 'USER', exp: Math.floor(Date.now() / 1000) - 10 },
+      SECRET,
+      { algorithm: 'HS256' },
     );
 
     expect(() => runWith(`Bearer ${expired}`)).toThrow(/expired/i);

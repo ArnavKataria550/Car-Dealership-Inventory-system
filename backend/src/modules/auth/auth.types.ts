@@ -1,4 +1,11 @@
-export type Role = 'USER' | 'ADMIN';
+export const ROLES = ['USER', 'ADMIN'] as const;
+export type Role = (typeof ROLES)[number];
+
+/** Identity attached to `req.user` once a request's token has been verified. */
+export interface AuthenticatedUser {
+  id: string;
+  role: Role;
+}
 
 /** A user as it may be exposed over the API: never includes the password hash. */
 export interface PublicUser {
