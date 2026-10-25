@@ -48,4 +48,10 @@ export class PrismaVehicleRepository implements VehicleRepository {
       throw error;
     }
   }
+
+  async delete(id: string): Promise<boolean> {
+    // deleteMany never throws for a missing row, so no error mapping is needed.
+    const { count } = await this.prisma.vehicle.deleteMany({ where: { id } });
+    return count > 0;
+  }
 }

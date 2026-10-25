@@ -29,6 +29,7 @@ export function createVehicleRouter(
   router.get('/search', validateQuery(searchVehiclesSchema), controller.search);
   router.post('/', adminOnly, validateBody(createVehicleSchema), controller.create);
   router.put('/:id', adminOnly, validateBody(updateVehicleSchema), controller.update);
+  router.delete('/:id', adminOnly, controller.delete);
 
   return router;
 }

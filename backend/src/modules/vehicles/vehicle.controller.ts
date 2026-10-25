@@ -30,4 +30,9 @@ export class VehicleController {
     const vehicle = await this.vehicleService.update(req.params.id, req.body as UpdateVehicleBody);
     res.status(200).json({ vehicle });
   };
+
+  delete: RequestHandler<{ id: string }> = async (req, res) => {
+    await this.vehicleService.delete(req.params.id);
+    res.status(204).end();
+  };
 }

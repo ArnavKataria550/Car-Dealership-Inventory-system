@@ -33,4 +33,15 @@ export class VehicleService {
     }
     return vehicle;
   }
+
+  /**
+   * Permanently removes a listing.
+   *
+   * @throws NotFoundError if no vehicle has that id.
+   */
+  async delete(id: string): Promise<void> {
+    if (!(await this.vehicles.delete(id))) {
+      throw new NotFoundError('Vehicle not found');
+    }
+  }
 }

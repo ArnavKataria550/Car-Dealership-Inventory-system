@@ -9,4 +9,6 @@ export interface VehicleRepository {
   search(filters: VehicleSearchFilters): Promise<Vehicle[]>;
   /** Applies the changes; resolves to null if no vehicle has that id. */
   update(id: string, changes: VehicleChanges): Promise<Vehicle | null>;
+  /** Removes the vehicle; resolves to false if no vehicle has that id. */
+  delete(id: string): Promise<boolean>;
 }
