@@ -1,6 +1,7 @@
 import type { Prisma, PrismaClient } from '../../generated/prisma/client.js';
+import { isRecordNotFound } from '../../lib/prisma-errors.js';
 import type { VehicleRepository } from './vehicle.repository.js';
-import type { NewVehicle, Vehicle, VehicleSearchFilters } from './vehicle.types.js';
+import type { NewVehicle, Vehicle, VehicleChanges, VehicleSearchFilters } from './vehicle.types.js';
 
 /** Newest listings first; id breaks ties so the order is always stable. */
 const NEWEST_FIRST: Prisma.VehicleOrderByWithRelationInput[] = [
@@ -35,5 +36,16 @@ export class PrismaVehicleRepository implements VehicleRepository {
       },
       orderBy: NEWEST_FIRST,
     });
+  }
+
+  async update(id: string, changes: VehicleChanges): Promise<Vehicle | null> {
+    try {
+      return await this.prisma.vehicle.update({ where: { id }, data: changes });
+    } catch (error) {
+      if (isRecordNotFound(error)) {
+        return null;
+      }
+      throw error;
+    }
   }
 }

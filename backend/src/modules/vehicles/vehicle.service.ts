@@ -1,5 +1,6 @@
+import { NotFoundError } from '../../errors/app-error.js';
 import type { VehicleRepository } from './vehicle.repository.js';
-import type { NewVehicle, Vehicle, VehicleSearchFilters } from './vehicle.types.js';
+import type { NewVehicle, Vehicle, VehicleChanges, VehicleSearchFilters } from './vehicle.types.js';
 
 /** Inventory rules for vehicle listings. Free of HTTP and database details. */
 export class VehicleService {
@@ -18,5 +19,18 @@ export class VehicleService {
   /** Listings matching all given filters (none given: every listing). */
   search(filters: VehicleSearchFilters): Promise<Vehicle[]> {
     return this.vehicles.search(filters);
+  }
+
+  /**
+   * Changes only the provided fields of a listing.
+   *
+   * @throws NotFoundError if no vehicle has that id.
+   */
+  async update(id: string, changes: VehicleChanges): Promise<Vehicle> {
+    const vehicle = await this.vehicles.update(id, changes);
+    if (!vehicle) {
+      throw new NotFoundError('Vehicle not found');
+    }
+    return vehicle;
   }
 }

@@ -29,8 +29,8 @@ const categorySchema = z
   .toUpperCase()
   .pipe(z.enum(CATEGORIES, { error: `Category must be one of: ${CATEGORIES.join(', ')}` }));
 
-/** Body of POST /api/vehicles. Unknown keys (e.g. a client-chosen id) are stripped. */
-export const createVehicleSchema = z.object({
+/** Rules for each editable field, shared by create (all required) and update (all optional). */
+const vehicleFields = {
   make: requiredText('Make', 50),
   model: requiredText('Model', 50),
   category: categorySchema,
@@ -40,15 +40,34 @@ export const createVehicleSchema = z.object({
     .refine((year) => year <= new Date().getFullYear() + 1, 'Year cannot be later than next year'),
   color: requiredText('Color', 30),
   priceCents: wholeNumber('Price').min(0, 'Price cannot be negative'),
-  quantity: wholeNumber('Quantity').min(0, 'Quantity cannot be negative').default(0),
+  quantity: wholeNumber('Quantity').min(0, 'Quantity cannot be negative'),
   imageUrl: z
     .string({ error: 'Image URL is required' })
     .trim()
     .max(2048, 'Image URL is too long')
     .pipe(z.url({ protocol: /^https?$/, error: 'Image URL must be a valid http(s) URL' })),
+};
+
+/** Body of POST /api/vehicles. Unknown keys (e.g. a client-chosen id) are stripped. */
+export const createVehicleSchema = z.object({
+  ...vehicleFields,
+  quantity: vehicleFields.quantity.default(0),
 });
 
 export type CreateVehicleBody = z.infer<typeof createVehicleSchema>;
+
+/**
+ * Body of PUT /api/vehicles/:id: a partial update. Any subset of fields may be
+ * sent (absent ones keep their current value), but at least one is required.
+ */
+export const updateVehicleSchema = z
+  .object(vehicleFields)
+  .partial()
+  .refine((changes) => Object.keys(changes).length > 0, {
+    message: 'Provide at least one field to update',
+  });
+
+export type UpdateVehicleBody = z.infer<typeof updateVehicleSchema>;
 
 /** Treats a missing, empty or whitespace-only query value as "no filter". */
 function blankToUndefined(value: unknown): unknown {

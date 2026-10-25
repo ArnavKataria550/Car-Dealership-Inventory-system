@@ -4,7 +4,11 @@ import { requireRole } from '../../middleware/require-role.js';
 import { validateBody } from '../../middleware/validate-body.js';
 import { validateQuery } from '../../middleware/validate-query.js';
 import type { VehicleController } from './vehicle.controller.js';
-import { createVehicleSchema, searchVehiclesSchema } from './vehicle.schemas.js';
+import {
+  createVehicleSchema,
+  searchVehiclesSchema,
+  updateVehicleSchema,
+} from './vehicle.schemas.js';
 
 /**
  * Routes mounted at /api/vehicles. Every route requires a logged-in user;
@@ -24,6 +28,7 @@ export function createVehicleRouter(
   // Must stay above any `/:id` route so "search" is never read as an id.
   router.get('/search', validateQuery(searchVehiclesSchema), controller.search);
   router.post('/', adminOnly, validateBody(createVehicleSchema), controller.create);
+  router.put('/:id', adminOnly, validateBody(updateVehicleSchema), controller.update);
 
   return router;
 }

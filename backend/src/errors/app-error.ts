@@ -42,6 +42,13 @@ export class ForbiddenError extends AppError {
   }
 }
 
+/** 404: the requested resource does not exist. */
+export class NotFoundError extends AppError {
+  constructor(message = 'Resource not found') {
+    super(404, 'NOT_FOUND', message);
+  }
+}
+
 /** 409: the request conflicts with existing state (e.g. duplicate email). */
 export class ConflictError extends AppError {
   constructor(message: string) {
