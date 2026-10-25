@@ -15,6 +15,8 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   description?: string;
+  /** md suits confirmations; lg gives forms room for two columns. */
+  size?: 'md' | 'lg';
   children: ReactNode;
 }
 
@@ -27,7 +29,13 @@ export function Modal({ open, ...panelProps }: ModalProps) {
   return createPortal(<ModalPanel {...panelProps} />, document.body);
 }
 
-function ModalPanel({ onClose, title, description, children }: Omit<ModalProps, 'open'>) {
+function ModalPanel({
+  onClose,
+  title,
+  description,
+  size = 'md',
+  children,
+}: Omit<ModalProps, 'open'>) {
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -72,7 +80,7 @@ function ModalPanel({ onClose, title, description, children }: Omit<ModalProps, 
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
-        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-card-hover sm:p-8"
+        className={`relative max-h-[90vh] w-full ${size === 'lg' ? 'max-w-2xl' : 'max-w-lg'} overflow-y-auto rounded-2xl bg-white p-6 shadow-card-hover sm:p-8`}
       >
         <button
           type="button"

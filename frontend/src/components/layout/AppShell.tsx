@@ -16,12 +16,12 @@ export function AppShell() {
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-30 border-b border-white/5 bg-ink-950/95 text-paper backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-6">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6">
           <Link to="/" aria-label="Drivewright home" className="rounded-lg">
-            <Logo />
+            <Logo compactOnMobile />
           </Link>
 
-          <nav aria-label="Main" className="flex items-center gap-6">
+          <nav aria-label="Main" className="flex items-center gap-4 sm:gap-6">
             <NavLink to="/" end className={navLinkClass}>
               Inventory
             </NavLink>
@@ -32,12 +32,12 @@ export function AppShell() {
             )}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <span className="hidden text-sm text-stone-300 sm:inline">Hi, {firstName}</span>
             <button
               type="button"
               onClick={() => logout()}
-              className="rounded-xl border border-white/15 px-4 py-2 text-sm font-medium transition hover:border-accent hover:text-accent"
+              className="rounded-xl border border-white/15 px-3 py-2 text-sm font-medium whitespace-nowrap transition hover:border-accent hover:text-accent sm:px-4"
             >
               Log out
             </button>

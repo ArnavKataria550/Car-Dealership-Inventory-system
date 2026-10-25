@@ -1,7 +1,13 @@
 import { BRAND_NAME } from '../../config/brand';
 
+interface LogoProps {
+  className?: string;
+  /** Show only the "D" mark on small screens (used in the navbar, where space is tight). */
+  compactOnMobile?: boolean;
+}
+
 /** Drivewright wordmark: a rounded "D" mark plus the name with an amber full stop. */
-export function Logo({ className = '' }: { className?: string }) {
+export function Logo({ className = '', compactOnMobile = false }: LogoProps) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <svg viewBox="0 0 64 64" className="size-8 shrink-0" aria-hidden="true">
@@ -14,7 +20,11 @@ export function Logo({ className = '' }: { className?: string }) {
           strokeLinejoin="round"
         />
       </svg>
-      <span className="font-display text-xl font-semibold tracking-tight">
+      <span
+        className={`font-display text-xl font-semibold tracking-tight ${
+          compactOnMobile ? 'hidden sm:inline' : ''
+        }`}
+      >
         {BRAND_NAME}
         <span className="text-accent">.</span>
       </span>

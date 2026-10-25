@@ -37,6 +37,7 @@ export function VehicleFormDialog({ target, onClose, onSaved }: VehicleFormDialo
     <Modal
       open={target !== null}
       onClose={onClose}
+      size="lg"
       title={editing ? `Edit ${vehicleTitle(editing)}` : 'Add a vehicle'}
       description={
         editing

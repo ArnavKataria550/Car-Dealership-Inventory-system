@@ -172,7 +172,7 @@ function VehicleRow({ vehicle, onEdit, onRestock, onDelete }: VehicleRowProps) {
             className="h-12 w-20 shrink-0 rounded-lg bg-stone-200 object-cover"
           />
           <div>
-            <p className="font-semibold text-ink-950">{title}</p>
+            <p className="font-semibold whitespace-nowrap text-ink-950">{title}</p>
             <p className="text-xs text-stone-500">{vehicle.color}</p>
           </div>
         </div>
