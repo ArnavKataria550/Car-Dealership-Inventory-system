@@ -6,6 +6,7 @@ import { InventoryPage } from '../pages/InventoryPage';
 import { LoginPage } from '../pages/LoginPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { RegisterPage } from '../pages/RegisterPage';
+import { VehicleDetailsPage } from '../pages/VehicleDetailsPage';
 import { AdminRoute, GuestOnlyRoute, ProtectedRoute } from './guards';
 
 /**
@@ -27,6 +28,7 @@ export const appRoutes: RouteObject[] = [
         element: <AppShell />,
         children: [
           { path: '/', element: <InventoryPage /> },
+          { path: '/vehicles/:id', element: <VehicleDetailsPage /> },
           {
             element: <AdminRoute />,
             children: [{ path: '/admin', element: <AdminPage /> }],
