@@ -31,6 +31,13 @@ export default defineConfig({
       include: ['src/**/*.ts'],
       exclude: ['src/server.ts', 'src/generated/**'],
       reporter: ['text', 'html', 'json-summary'],
+      // `npm run test:coverage` (and therefore CI) fails if coverage drops below these.
+      thresholds: {
+        lines: 90,
+        statements: 90,
+        functions: 90,
+        branches: 85,
+      },
     },
   },
 });
