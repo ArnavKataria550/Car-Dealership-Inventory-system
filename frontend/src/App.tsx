@@ -1,6 +1,7 @@
 import { RouterProvider, type createBrowserRouter } from 'react-router';
 
 import { AuthProvider } from './auth/AuthProvider';
+import { ToastProvider } from './components/toast/ToastProvider';
 
 type AppRouter = ReturnType<typeof createBrowserRouter>;
 
@@ -8,7 +9,9 @@ type AppRouter = ReturnType<typeof createBrowserRouter>;
 export function App({ router }: { router: AppRouter }) {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <ToastProvider>
+        <RouterProvider router={router} />
+      </ToastProvider>
     </AuthProvider>
   );
 }

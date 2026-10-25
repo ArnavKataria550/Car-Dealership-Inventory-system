@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { createMemoryRouter } from 'react-router';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { App } from './App';
 import { saveSession } from './auth/session';
@@ -68,6 +68,11 @@ async function signIn(user: ReturnType<typeof userEvent.setup>, email: string) {
 }
 
 describe('Drivewright app', () => {
+  beforeEach(() => {
+    // The inventory page loads vehicles; these flows only care about auth and navigation.
+    server.use(http.get('/api/vehicles', () => HttpResponse.json({ vehicles: [] })));
+  });
+
   afterEach(() => {
     vi.useRealTimers();
   });
@@ -100,7 +105,7 @@ describe('Drivewright app', () => {
     await signIn(user, 'arnav@example.com');
 
     expect(await screen.findByText('Hi, Arnav')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /inventory/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /find your next car/i })).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: /^admin$/i })).not.toBeInTheDocument();
   });
 
@@ -143,7 +148,7 @@ describe('Drivewright app', () => {
     await user.click(screen.getByRole('button', { name: /create account/i }));
 
     expect(await screen.findByText('Hi, Arnav')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /inventory/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /find your next car/i })).toBeInTheDocument();
   });
 
   it('links from the register page back to sign in', () => {
