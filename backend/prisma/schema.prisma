@@ -32,6 +32,8 @@ enum Category {
 
 model User {
   id           String   @id @default(cuid())
+  /// Display name shown in the UI (e.g. "Hi, Arnav"). Login is by email; names need not be unique.
+  name         String
   email        String   @unique
   passwordHash String
   role         Role     @default(USER)
@@ -52,7 +54,8 @@ model Vehicle {
   priceCents Int
   /// Units in stock. A CHECK constraint in the migration keeps it >= 0.
   quantity   Int      @default(0)
-  imageUrl   String?
+  /// Photo of this exact make, model and year. Required: every listing must show the car.
+  imageUrl   String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
