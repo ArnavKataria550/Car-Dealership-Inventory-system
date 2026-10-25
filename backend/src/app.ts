@@ -1,5 +1,10 @@
 import express, { type Express } from 'express';
 
+import { createDependencies, type AppDependencies } from './container.js';
+import { errorHandler } from './middleware/error-handler.js';
+import { AuthController } from './modules/auth/auth.controller.js';
+import { createAuthRouter } from './modules/auth/auth.routes.js';
+
 /**
  * Builds the Express application without binding it to a port.
  *
@@ -7,7 +12,7 @@ import express, { type Express } from 'express';
  * full HTTP stack in-process with Supertest, and lets server.ts own the
  * process-level concerns (port, startup logging).
  */
-export function createApp(): Express {
+export function createApp(dependencies: AppDependencies = createDependencies()): Express {
   const app = express();
 
   app.use(express.json());
@@ -15,6 +20,11 @@ export function createApp(): Express {
   app.get('/api/health', (_req, res) => {
     res.status(200).json({ status: 'ok' });
   });
+
+  app.use('/api/auth', createAuthRouter(new AuthController(dependencies.authService)));
+
+  // Must be registered after all routes.
+  app.use(errorHandler);
 
   return app;
 }

@@ -15,6 +15,19 @@ export class AppError extends Error {
   }
 }
 
+/** One problem with one field of a request body. */
+export interface FieldError {
+  field: string;
+  message: string;
+}
+
+/** 400: the request body failed schema validation. */
+export class ValidationError extends AppError {
+  constructor(details: FieldError[]) {
+    super(400, 'VALIDATION_ERROR', 'Request body is invalid', details);
+  }
+}
+
 /** 409: the request conflicts with existing state (e.g. duplicate email). */
 export class ConflictError extends AppError {
   constructor(message: string) {
