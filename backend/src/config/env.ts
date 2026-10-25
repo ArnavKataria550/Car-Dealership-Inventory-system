@@ -19,10 +19,14 @@ const envSchema = z.object({
 
 export type Env = z.infer<typeof envSchema>;
 
-const parsed = envSchema.safeParse(process.env);
+/** Validates a set of environment variables, throwing a readable error if any are invalid. */
+export function parseEnv(source: Record<string, string | undefined>): Env {
+  const parsed = envSchema.safeParse(source);
 
-if (!parsed.success) {
-  throw new Error(`Invalid environment configuration:\n${z.prettifyError(parsed.error)}`);
+  if (!parsed.success) {
+    throw new Error(`Invalid environment configuration:\n${z.prettifyError(parsed.error)}`);
+  }
+  return parsed.data;
 }
 
-export const env: Env = parsed.data;
+export const env: Env = parseEnv(process.env);
