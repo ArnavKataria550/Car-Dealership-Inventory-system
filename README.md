@@ -311,8 +311,9 @@ I reviewed, tested and approved before they were pushed.
 
 ### Reflection
 
-> **TODO (Arnav):** write your own reflection here: how AI changed your workflow, what
-> worked well, what you had to check or correct, and what you would do differently.
+Working on this project with Claude Code helped me understand how AI can make software development easier without replacing my own thinking. I decided the requirements and important things, and reviewed the changes before approving them. Claude helped me break the work into smaller phases and use TDD, where tests are written before the actual code. This helped me find issues early and understand why some features were not working properly.
+
+I also learned that AI generated code still needs to be checked carefully. Testing in the browser showed some UI issues that automated tests didnt catch, and checking image licences taught me to be more careful with external resources. I reviewed commits and tested the application instead of blindly trusting every suggestion. This experience improved my debugging and planning skills. I still need to understand some implementation details better, but it showed me how useful AI can be when I take responsibility for the final result. It has made me more careful about building reliable software.
 
 ## Image credits
 
