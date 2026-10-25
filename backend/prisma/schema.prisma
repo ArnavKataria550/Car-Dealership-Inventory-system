@@ -1,0 +1,62 @@
+// Prisma schema for the Car Dealership Inventory System.
+// The connection URL lives in prisma.config.ts (Prisma 7+), not here.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  runtime             = "nodejs"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Access level. Everyone registers as USER; ADMIN accounts are created by the seed script.
+enum Role {
+  USER
+  ADMIN
+}
+
+/// Fixed set of body styles a vehicle can be listed under.
+enum Category {
+  SEDAN
+  SUV
+  HATCHBACK
+  TRUCK
+  CONVERTIBLE
+  VAN
+  EV
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Vehicle {
+  id         String   @id @default(cuid())
+  make       String
+  model      String
+  category   Category
+  year       Int
+  color      String
+  /// Price in integer cents (e.g. 2499900 = $24,999.00) to avoid floating-point errors.
+  priceCents Int
+  /// Units in stock. A CHECK constraint in the migration keeps it >= 0.
+  quantity   Int      @default(0)
+  imageUrl   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([make])
+  @@index([category])
+  @@map("vehicles")
+}
