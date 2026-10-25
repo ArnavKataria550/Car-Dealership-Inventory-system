@@ -35,6 +35,13 @@ export class UnauthorizedError extends AppError {
   }
 }
 
+/** 403: authenticated, but not allowed to perform this action. */
+export class ForbiddenError extends AppError {
+  constructor(message = 'You do not have permission to perform this action') {
+    super(403, 'FORBIDDEN', message);
+  }
+}
+
 /** 409: the request conflicts with existing state (e.g. duplicate email). */
 export class ConflictError extends AppError {
   constructor(message: string) {
