@@ -1,5 +1,7 @@
-import type { RequestHandler } from 'express';
+import type { Request, RequestHandler } from 'express';
 
+import { UnauthorizedError } from '../../errors/app-error.js';
+import type { AuthenticatedUser } from '../auth/auth.types.js';
 import type {
   CreateVehicleBody,
   PurchaseBody,
@@ -40,7 +42,11 @@ export class VehicleController {
 
   purchase: RequestHandler<{ id: string }> = async (req, res) => {
     const { quantity } = req.body as PurchaseBody;
-    const vehicle = await this.vehicleService.purchase(req.params.id, quantity);
+    const vehicle = await this.vehicleService.purchase(
+      req.params.id,
+      quantity,
+      currentUser(req).id,
+    );
     res.status(200).json({ vehicle });
   };
 
@@ -49,4 +55,10 @@ export class VehicleController {
     const vehicle = await this.vehicleService.restock(req.params.id, quantity);
     res.status(200).json({ vehicle });
   };
+}
+
+/** The caller set by the authenticate middleware, which runs on every vehicles route. */
+function currentUser(req: Request<{ id: string }>): AuthenticatedUser {
+  if (!req.user) throw new UnauthorizedError();
+  return req.user;
 }

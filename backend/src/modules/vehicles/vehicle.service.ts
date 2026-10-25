@@ -46,13 +46,14 @@ export class VehicleService {
   }
 
   /**
-   * Buys `quantity` units, lowering the stock atomically.
+   * Sells `quantity` units to `buyerId`, lowering the stock atomically and
+   * recording the purchase.
    *
    * @throws NotFoundError if no vehicle has that id.
    * @throws InsufficientStockError if fewer than `quantity` units are in stock.
    */
-  async purchase(id: string, quantity: number): Promise<Vehicle> {
-    const updated = await this.vehicles.decrementStockIfAvailable(id, quantity);
+  async purchase(id: string, quantity: number, buyerId: string): Promise<Vehicle> {
+    const updated = await this.vehicles.sellUnits(id, quantity, buyerId);
     if (updated) {
       return updated;
     }

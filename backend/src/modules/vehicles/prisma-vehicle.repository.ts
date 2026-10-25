@@ -56,7 +56,7 @@ export class PrismaVehicleRepository implements VehicleRepository {
     return this.prisma.vehicle.findUnique({ where: { id } });
   }
 
-  decrementStockIfAvailable(id: string, quantity: number): Promise<Vehicle | null> {
+  sellUnits(id: string, quantity: number, buyerId: string): Promise<Vehicle | null> {
     return this.prisma.$transaction(async (tx) => {
       // One conditional UPDATE: the stock check and the decrement happen in the
       // same statement, so two buyers can never both take the last unit.
@@ -68,7 +68,23 @@ export class PrismaVehicleRepository implements VehicleRepository {
         return null;
       }
       // Our UPDATE holds the row lock until commit, so this read sees exactly our result.
-      return tx.vehicle.findUniqueOrThrow({ where: { id } });
+      const sold = await tx.vehicle.findUniqueOrThrow({ where: { id } });
+      // Recorded in the same transaction: a sale never exists without its order, or vice versa.
+      await tx.purchase.create({
+        data: {
+          buyerId,
+          vehicleId: sold.id,
+          quantity,
+          unitPriceCents: sold.priceCents,
+          make: sold.make,
+          model: sold.model,
+          category: sold.category,
+          year: sold.year,
+          color: sold.color,
+          imageUrl: sold.imageUrl,
+        },
+      });
+      return sold;
     });
   }
 
