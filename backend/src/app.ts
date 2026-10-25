@@ -3,6 +3,7 @@ import express, { type Express } from 'express';
 import { createDependencies, type AppDependencies } from './container.js';
 import { createAuthenticate } from './middleware/authenticate.js';
 import { errorHandler } from './middleware/error-handler.js';
+import { notFound } from './middleware/not-found.js';
 import { AuthController } from './modules/auth/auth.controller.js';
 import { createAuthRouter } from './modules/auth/auth.routes.js';
 import { VehicleController } from './modules/vehicles/vehicle.controller.js';
@@ -32,7 +33,8 @@ export function createApp(dependencies: AppDependencies = createDependencies()):
     createVehicleRouter(new VehicleController(dependencies.vehicleService), authenticate),
   );
 
-  // Must be registered after all routes.
+  // Both must be registered after all routes, in this order.
+  app.use(notFound);
   app.use(errorHandler);
 
   return app;
