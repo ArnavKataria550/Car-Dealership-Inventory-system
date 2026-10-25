@@ -1,0 +1,51 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/sora';
+
+/*
+ * Design tokens. Mostly black and off-white with a single amber accent,
+ * so the cars' photos carry the colour.
+ */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sora Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+
+  --color-ink-950: #0b0b0c;
+  --color-ink-900: #141416;
+  --color-ink-800: #1f1f23;
+  --color-ink-700: #2c2c31;
+  --color-paper: #f7f5f0;
+
+  /* The one accent colour: primary actions, focus rings, highlights. */
+  --color-accent: #f59e0b;
+  --color-accent-hover: #fbbf24;
+  --color-accent-ink: #78350f;
+
+  --shadow-card: 0 1px 2px rgb(11 11 12 / 0.04), 0 8px 24px -12px rgb(11 11 12 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(11 11 12 / 0.06), 0 24px 48px -16px rgb(11 11 12 / 0.3);
+}
+
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink-950 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
