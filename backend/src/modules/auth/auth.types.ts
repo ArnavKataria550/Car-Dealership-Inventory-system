@@ -14,3 +14,20 @@ export interface RegisterInput {
   email: string;
   password: string;
 }
+
+export interface LoginInput {
+  email: string;
+  password: string;
+}
+
+/** Returned by a successful login: a bearer token plus the user it belongs to. */
+export interface AuthResult {
+  token: string;
+  user: PublicUser;
+}
+
+export interface AuthTokenOptions {
+  jwtSecret: string;
+  /** Lifetime in `ms`-style notation, e.g. "1h". */
+  jwtExpiresIn: string;
+}

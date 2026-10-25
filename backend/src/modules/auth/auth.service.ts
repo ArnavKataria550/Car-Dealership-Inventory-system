@@ -1,13 +1,27 @@
-import { ConflictError } from '../../errors/app-error.js';
-import type { PublicUser, RegisterInput } from './auth.types.js';
+import jwt, { type SignOptions } from 'jsonwebtoken';
+
+import { ConflictError, UnauthorizedError } from '../../errors/app-error.js';
+import type {
+  AuthResult,
+  AuthTokenOptions,
+  LoginInput,
+  PublicUser,
+  RegisterInput,
+} from './auth.types.js';
 import type { PasswordHasher } from './password-hasher.js';
 import type { UserRecord, UserRepository } from './user.repository.js';
 
+const INVALID_CREDENTIALS_MESSAGE = 'Invalid email or password';
+
 /** Registration and login rules. Free of HTTP and database details. */
 export class AuthService {
+  /** Hash compared against when the email is unknown, so both failure paths cost the same. */
+  private dummyPasswordHash?: string;
+
   constructor(
     private readonly users: UserRepository,
     private readonly passwordHasher: PasswordHasher,
+    private readonly tokenOptions: AuthTokenOptions,
   ) {}
 
   /**
@@ -27,6 +41,42 @@ export class AuthService {
     const user = await this.users.create({ name: input.name.trim(), email, passwordHash });
 
     return toPublicUser(user);
+  }
+
+  /**
+   * Verifies credentials and issues a signed JWT.
+   *
+   * An unknown email and a wrong password produce the same error, and both
+   * run one hash comparison, so responses do not reveal which emails exist.
+   *
+   * @throws UnauthorizedError if the credentials do not match an account.
+   */
+  async login(input: LoginInput): Promise<AuthResult> {
+    const user = await this.users.findByEmail(normalizeEmail(input.email));
+
+    if (!user) {
+      await this.passwordHasher.compare(input.password, await this.getDummyPasswordHash());
+      throw new UnauthorizedError(INVALID_CREDENTIALS_MESSAGE);
+    }
+
+    if (!(await this.passwordHasher.compare(input.password, user.passwordHash))) {
+      throw new UnauthorizedError(INVALID_CREDENTIALS_MESSAGE);
+    }
+
+    return { token: this.signToken(user), user: toPublicUser(user) };
+  }
+
+  private signToken(user: UserRecord): string {
+    return jwt.sign({ role: user.role }, this.tokenOptions.jwtSecret, {
+      algorithm: 'HS256',
+      subject: user.id,
+      expiresIn: this.tokenOptions.jwtExpiresIn as SignOptions['expiresIn'],
+    });
+  }
+
+  private async getDummyPasswordHash(): Promise<string> {
+    this.dummyPasswordHash ??= await this.passwordHasher.hash('timing-equaliser-not-a-password');
+    return this.dummyPasswordHash;
   }
 }
 

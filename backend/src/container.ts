@@ -15,6 +15,9 @@ export function createDependencies(): AppDependencies {
   const passwordHasher = new BcryptPasswordHasher(env.BCRYPT_ROUNDS);
 
   return {
-    authService: new AuthService(users, passwordHasher),
+    authService: new AuthService(users, passwordHasher, {
+      jwtSecret: env.JWT_SECRET,
+      jwtExpiresIn: env.JWT_EXPIRES_IN,
+    }),
   };
 }

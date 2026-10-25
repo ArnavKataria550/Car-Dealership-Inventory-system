@@ -20,3 +20,11 @@ export const registerSchema = z.object({
 });
 
 export type RegisterBody = z.infer<typeof registerSchema>;
+
+/** Login only checks presence/shape; password rules are enforced at registration. */
+export const loginSchema = z.object({
+  email: z.string({ error: 'Email is required' }).trim().pipe(z.email('Email is invalid')),
+  password: z.string({ error: 'Password is required' }).min(1, 'Password is required'),
+});
+
+export type LoginBody = z.infer<typeof loginSchema>;

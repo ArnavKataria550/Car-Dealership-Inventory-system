@@ -28,6 +28,13 @@ export class ValidationError extends AppError {
   }
 }
 
+/** 401: missing, invalid or rejected credentials. */
+export class UnauthorizedError extends AppError {
+  constructor(message = 'Authentication required') {
+    super(401, 'UNAUTHORIZED', message);
+  }
+}
+
 /** 409: the request conflicts with existing state (e.g. duplicate email). */
 export class ConflictError extends AppError {
   constructor(message: string) {
