@@ -23,6 +23,9 @@ export default defineConfig({
     },
     // Integration test files share one database, so run files one at a time.
     fileParallelism: false,
+    // Files already run serially, so they can also share one module graph: the
+    // generated Prisma client and app are loaded once instead of once per file.
+    isolate: false,
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
