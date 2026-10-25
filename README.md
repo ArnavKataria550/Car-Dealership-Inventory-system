@@ -17,6 +17,11 @@ A full-stack web application for managing a car dealership's vehicle inventory.
 
 🚧 Early development — the project is being built in small, incremental steps.
 
+## Image Credits
+
+Demo vehicle photos come from Wikimedia Commons under free licenses; see
+[docs/IMAGE_CREDITS.md](docs/IMAGE_CREDITS.md) for the author and license of each one.
+
 ## Development
 
 This project is developed by [Arnav Kataria](https://github.com/ArnavKataria550) with
