@@ -13,6 +13,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    globalSetup: ['tests/global-setup.ts'],
     // Allows the suite to run before the first test exists (scaffold commits).
     passWithNoTests: true,
     env: {

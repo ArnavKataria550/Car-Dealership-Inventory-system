@@ -16,7 +16,7 @@
     "test:report": "node scripts/generate-test-report.mjs"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
