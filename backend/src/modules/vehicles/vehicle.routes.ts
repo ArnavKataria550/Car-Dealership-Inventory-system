@@ -7,6 +7,7 @@ import type { VehicleController } from './vehicle.controller.js';
 import {
   createVehicleSchema,
   purchaseSchema,
+  restockSchema,
   searchVehiclesSchema,
   updateVehicleSchema,
 } from './vehicle.schemas.js';
@@ -34,6 +35,7 @@ export function createVehicleRouter(
 
   // Inventory: any logged-in user may buy.
   router.post('/:id/purchase', validateBody(purchaseSchema), controller.purchase);
+  router.post('/:id/restock', adminOnly, validateBody(restockSchema), controller.restock);
 
   return router;
 }

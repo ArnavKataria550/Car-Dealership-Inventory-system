@@ -1,6 +1,7 @@
 import type { Prisma, PrismaClient } from '../../generated/prisma/client.js';
 import { isRecordNotFound } from '../../lib/prisma-errors.js';
 import type { VehicleRepository } from './vehicle.repository.js';
+import { MAX_INT32 } from './vehicle.types.js';
 import type { NewVehicle, Vehicle, VehicleChanges, VehicleSearchFilters } from './vehicle.types.js';
 
 /** Newest listings first; id breaks ties so the order is always stable. */
@@ -67,6 +68,19 @@ export class PrismaVehicleRepository implements VehicleRepository {
         return null;
       }
       // Our UPDATE holds the row lock until commit, so this read sees exactly our result.
+      return tx.vehicle.findUniqueOrThrow({ where: { id } });
+    });
+  }
+
+  incrementStockIfRoom(id: string, quantity: number): Promise<Vehicle | null> {
+    return this.prisma.$transaction(async (tx) => {
+      const { count } = await tx.vehicle.updateMany({
+        where: { id, quantity: { lte: MAX_INT32 - quantity } },
+        data: { quantity: { increment: quantity } },
+      });
+      if (count === 0) {
+        return null;
+      }
       return tx.vehicle.findUniqueOrThrow({ where: { id } });
     });
   }

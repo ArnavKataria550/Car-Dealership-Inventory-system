@@ -1,4 +1,4 @@
-import { InsufficientStockError, NotFoundError } from '../../errors/app-error.js';
+import { ConflictError, InsufficientStockError, NotFoundError } from '../../errors/app-error.js';
 import type { VehicleRepository } from './vehicle.repository.js';
 import type { NewVehicle, Vehicle, VehicleChanges, VehicleSearchFilters } from './vehicle.types.js';
 
@@ -63,5 +63,24 @@ export class VehicleService {
       throw new NotFoundError('Vehicle not found');
     }
     throw new InsufficientStockError(current.quantity);
+  }
+
+  /**
+   * Adds `quantity` units to the stock (admin only; the per-request cap is
+   * enforced by the request schema).
+   *
+   * @throws NotFoundError if no vehicle has that id.
+   * @throws ConflictError if the new total would exceed the storable maximum.
+   */
+  async restock(id: string, quantity: number): Promise<Vehicle> {
+    const updated = await this.vehicles.incrementStockIfRoom(id, quantity);
+    if (updated) {
+      return updated;
+    }
+
+    if (!(await this.vehicles.findById(id))) {
+      throw new NotFoundError('Vehicle not found');
+    }
+    throw new ConflictError('Restock would exceed the maximum stock level');
   }
 }

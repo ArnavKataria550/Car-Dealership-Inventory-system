@@ -16,4 +16,10 @@ export interface VehicleRepository {
    * vehicle does not exist or has too few units (nothing is changed then).
    */
   decrementStockIfAvailable(id: string, quantity: number): Promise<Vehicle | null>;
+  /**
+   * Atomically raises the stock by `quantity`, but only if the new total still
+   * fits the INTEGER column. Resolves to the updated vehicle, or null if the
+   * vehicle does not exist or there is no room (nothing is changed then).
+   */
+  incrementStockIfRoom(id: string, quantity: number): Promise<Vehicle | null>;
 }

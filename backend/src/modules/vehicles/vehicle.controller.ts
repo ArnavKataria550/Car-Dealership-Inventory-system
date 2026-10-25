@@ -3,6 +3,7 @@ import type { RequestHandler } from 'express';
 import type {
   CreateVehicleBody,
   PurchaseBody,
+  RestockBody,
   SearchVehiclesQuery,
   UpdateVehicleBody,
 } from './vehicle.schemas.js';
@@ -40,6 +41,12 @@ export class VehicleController {
   purchase: RequestHandler<{ id: string }> = async (req, res) => {
     const { quantity } = req.body as PurchaseBody;
     const vehicle = await this.vehicleService.purchase(req.params.id, quantity);
+    res.status(200).json({ vehicle });
+  };
+
+  restock: RequestHandler<{ id: string }> = async (req, res) => {
+    const { quantity } = req.body as RestockBody;
+    const vehicle = await this.vehicleService.restock(req.params.id, quantity);
     res.status(200).json({ vehicle });
   };
 }

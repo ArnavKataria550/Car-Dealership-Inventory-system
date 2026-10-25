@@ -1,9 +1,7 @@
 import { z } from 'zod';
 
-import { CATEGORIES } from './vehicle.types.js';
+import { CATEGORIES, MAX_INT32, MAX_RESTOCK_PER_REQUEST } from './vehicle.types.js';
 
-/** Largest value a Postgres INTEGER column can hold; beyond it inserts would fail with a 500. */
-const MAX_INT32 = 2_147_483_647;
 /** The first petrol car (Benz Patent-Motorwagen) dates from 1886. */
 const FIRST_CAR_YEAR = 1886;
 
@@ -15,6 +13,7 @@ function requiredText(label: string, maxLength: number) {
     .max(maxLength, `${label} must be at most ${maxLength} characters`);
 }
 
+/** Integers beyond MAX_INT32 are rejected here, so the database never fails with a 500. */
 function wholeNumber(label: string) {
   return z
     .number({ error: `${label} must be a number` })
@@ -75,6 +74,18 @@ export const purchaseSchema = z.object({
 });
 
 export type PurchaseBody = z.infer<typeof purchaseSchema>;
+
+/** Body of POST /api/vehicles/:id/restock. The amount is required and capped per request. */
+export const restockSchema = z.object({
+  quantity: wholeNumber('Quantity')
+    .min(1, 'Quantity must be at least 1')
+    .max(
+      MAX_RESTOCK_PER_REQUEST,
+      `Quantity cannot exceed ${MAX_RESTOCK_PER_REQUEST} units per restock`,
+    ),
+});
+
+export type RestockBody = z.infer<typeof restockSchema>;
 
 /** Treats a missing, empty or whitespace-only query value as "no filter". */
 function blankToUndefined(value: unknown): unknown {

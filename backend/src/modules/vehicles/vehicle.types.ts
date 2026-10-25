@@ -9,6 +9,12 @@ export const CATEGORIES = [
 ] as const;
 export type Category = (typeof CATEGORIES)[number];
 
+/** Largest value a Postgres INTEGER column (price, stock) can hold. */
+export const MAX_INT32 = 2_147_483_647;
+
+/** Most units an admin may add in a single restock request (agreed business rule). */
+export const MAX_RESTOCK_PER_REQUEST = 100;
+
 /** A vehicle listing as stored and returned by the API. Prices are integer cents. */
 export interface Vehicle {
   id: string;
