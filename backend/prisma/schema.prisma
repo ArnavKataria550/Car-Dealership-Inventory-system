@@ -31,20 +31,21 @@ enum Category {
 }
 
 model User {
-  id           String   @id @default(cuid())
+  id           String     @id @default(cuid())
   /// Display name shown in the UI (e.g. "Hi, Arnav"). Login is by email; names need not be unique.
   name         String
-  email        String   @unique
+  email        String     @unique
   passwordHash String
-  role         Role     @default(USER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  role         Role       @default(USER)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  purchases    Purchase[]
 
   @@map("users")
 }
 
 model Vehicle {
-  id         String   @id @default(cuid())
+  id         String     @id @default(cuid())
   make       String
   model      String
   category   Category
@@ -53,13 +54,38 @@ model Vehicle {
   /// Price in integer cents (e.g. 2499900 = $24,999.00) to avoid floating-point errors.
   priceCents Int
   /// Units in stock. A CHECK constraint in the migration keeps it >= 0.
-  quantity   Int      @default(0)
+  quantity   Int        @default(0)
   /// Photo of this exact make, model and year. Required: every listing must show the car.
   imageUrl   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  purchases  Purchase[]
 
   @@index([make])
   @@index([category])
   @@map("vehicles")
+}
+
+/// One completed purchase. The vehicle's details and the unit price are copied
+/// at the time of sale, so the order history stays accurate even if the listing
+/// is later edited or deleted.
+model Purchase {
+  id             String   @id @default(cuid())
+  buyerId        String
+  buyer          User     @relation(fields: [buyerId], references: [id], onDelete: Cascade)
+  /// Null once the listing has been deleted; the snapshot below still describes the car.
+  vehicleId      String?
+  vehicle        Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
+  quantity       Int
+  unitPriceCents Int
+  make           String
+  model          String
+  category       Category
+  year           Int
+  color          String
+  imageUrl       String
+  createdAt      DateTime @default(now())
+
+  @@index([buyerId, createdAt])
+  @@map("purchases")
 }

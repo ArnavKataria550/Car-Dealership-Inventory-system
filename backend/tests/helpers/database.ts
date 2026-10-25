@@ -14,7 +14,7 @@ function assertTestDatabase(): void {
 /** Empties every table so each test starts from a clean state. */
 export async function resetDatabase(): Promise<void> {
   assertTestDatabase();
-  await prisma.$executeRaw`TRUNCATE TABLE "users", "vehicles" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "purchases", "users", "vehicles" RESTART IDENTITY CASCADE`;
 }
 
 export async function disconnectDatabase(): Promise<void> {
