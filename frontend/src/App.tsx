@@ -1,16 +1,14 @@
-import { BRAND_NAME, BRAND_TAGLINE } from './config/brand';
+import { RouterProvider, type createBrowserRouter } from 'react-router';
 
-/** Root component. Routing and authentication are added in the following commits. */
-export function App() {
+import { AuthProvider } from './auth/AuthProvider';
+
+type AppRouter = ReturnType<typeof createBrowserRouter>;
+
+/** Root component. The router is passed in so tests can use an in-memory one. */
+export function App({ router }: { router: AppRouter }) {
   return (
-    <main className="grid min-h-screen place-items-center bg-ink-950 px-6 text-paper">
-      <div className="text-center">
-        <h1 className="text-5xl font-semibold">
-          {BRAND_NAME}
-          <span className="text-accent">.</span>
-        </h1>
-        <p className="mt-3 text-stone-400">{BRAND_TAGLINE}</p>
-      </div>
-    </main>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }

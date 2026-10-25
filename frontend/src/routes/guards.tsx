@@ -26,8 +26,18 @@ export function AdminRoute() {
   return isAdmin ? <Outlet /> : <NoAccessPage />;
 }
 
-/** For /login and /register: a logged-in user has no reason to be there. */
+/**
+ * For /login and /register: a logged-in user has no reason to be there. This
+ * is also what moves the user on after logging in: back to the page that
+ * sent them to /login, or to the inventory.
+ */
 export function GuestOnlyRoute() {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/" replace /> : <Outlet />;
+  const location = useLocation();
+
+  if (isAuthenticated) {
+    const from = (location.state as LoginRedirectState | null)?.from?.pathname ?? '/';
+    return <Navigate to={from} replace />;
+  }
+  return <Outlet />;
 }

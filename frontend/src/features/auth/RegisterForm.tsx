@@ -17,7 +17,8 @@ type Field = keyof RegisterValues;
 const FIELDS: Field[] = ['name', 'email', 'password'];
 
 interface RegisterFormProps {
-  onSuccess: (user: User) => void;
+  /** Optional: routing already reacts to the login via GuestOnlyRoute. */
+  onSuccess?: (user: User) => void;
 }
 
 export function RegisterForm({ onSuccess }: RegisterFormProps) {
@@ -41,7 +42,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
     setSubmitting(true);
     try {
       const user = await register(values.name.trim(), values.email.trim(), values.password);
-      onSuccess(user);
+      onSuccess?.(user);
     } catch (error) {
       showServerError(error);
     } finally {

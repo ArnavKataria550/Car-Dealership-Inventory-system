@@ -9,7 +9,8 @@ import { TextField } from '../../components/ui/TextField';
 import { validateLogin, type FieldErrors, type LoginValues } from './validation';
 
 interface LoginFormProps {
-  onSuccess: (user: User) => void;
+  /** Optional: routing already reacts to the login via GuestOnlyRoute. */
+  onSuccess?: (user: User) => void;
 }
 
 export function LoginForm({ onSuccess }: LoginFormProps) {
@@ -33,7 +34,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     setSubmitting(true);
     try {
       const user = await login(values.email.trim(), values.password);
-      onSuccess(user);
+      onSuccess?.(user);
     } catch (error) {
       setFormError(error instanceof ApiError ? error.message : 'Something went wrong.');
       setValues((current) => ({ ...current, password: '' }));
