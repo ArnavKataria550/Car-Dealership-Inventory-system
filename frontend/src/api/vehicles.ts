@@ -66,6 +66,10 @@ export async function fetchVehicles(api: ApiClient, filters: VehicleFilters): Pr
   return vehicles;
 }
 
+export async function fetchVehicle(api: ApiClient, id: string): Promise<Vehicle> {
+  return (await api.get<{ vehicle: Vehicle }>(path(id))).vehicle;
+}
+
 export async function createVehicle(api: ApiClient, input: VehicleInput): Promise<Vehicle> {
   return (await api.post<{ vehicle: Vehicle }>('/vehicles', input)).vehicle;
 }
