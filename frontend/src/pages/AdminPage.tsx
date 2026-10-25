@@ -4,6 +4,7 @@ import { CATEGORY_LABELS, type Vehicle, type VehicleFilters } from '../api/vehic
 import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
 import { DeleteVehicleDialog } from '../features/admin/DeleteVehicleDialog';
+import { RestockDialog } from '../features/admin/RestockDialog';
 import { VehicleFormDialog, type VehicleFormTarget } from '../features/admin/VehicleFormDialog';
 import { StockBadge } from '../features/vehicles/StockBadge';
 import { useVehicles } from '../features/vehicles/useVehicles';
@@ -19,6 +20,7 @@ export function AdminPage() {
   const { showToast } = useToast();
   const [toDelete, setToDelete] = useState<Vehicle | null>(null);
   const [formTarget, setFormTarget] = useState<VehicleFormTarget>(null);
+  const [toRestock, setToRestock] = useState<Vehicle | null>(null);
 
   return (
     <>
@@ -86,6 +88,7 @@ export function AdminPage() {
                     key={vehicle.id}
                     vehicle={vehicle}
                     onEdit={setFormTarget}
+                    onRestock={setToRestock}
                     onDelete={setToDelete}
                   />
                 ))}
@@ -111,6 +114,15 @@ export function AdminPage() {
           else replaceVehicle(saved);
           setFormTarget(null);
           showToast({ message: `${created ? 'Added' : 'Saved'} ${vehicleTitle(saved)}` });
+        }}
+      />
+
+      <RestockDialog
+        vehicle={toRestock}
+        onClose={() => setToRestock(null)}
+        onRestocked={(updated) => {
+          replaceVehicle(updated);
+          setToRestock(null);
         }}
       />
 
@@ -153,10 +165,11 @@ function InventoryStats({ vehicles }: { vehicles: Vehicle[] }) {
 interface VehicleRowProps {
   vehicle: Vehicle;
   onEdit: (vehicle: Vehicle) => void;
+  onRestock: (vehicle: Vehicle) => void;
   onDelete: (vehicle: Vehicle) => void;
 }
 
-function VehicleRow({ vehicle, onEdit, onDelete }: VehicleRowProps) {
+function VehicleRow({ vehicle, onEdit, onRestock, onDelete }: VehicleRowProps) {
   const title = vehicleTitle(vehicle);
 
   return (
@@ -189,6 +202,14 @@ function VehicleRow({ vehicle, onEdit, onDelete }: VehicleRowProps) {
             className="rounded-lg px-3 py-1.5 text-sm font-medium text-ink-800 transition hover:bg-stone-100"
           >
             Edit
+          </button>
+          <button
+            type="button"
+            aria-label={`Restock ${title}`}
+            onClick={() => onRestock(vehicle)}
+            className="rounded-lg px-3 py-1.5 text-sm font-medium text-ink-800 transition hover:bg-stone-100"
+          >
+            Restock
           </button>
           <button
             type="button"

@@ -4,6 +4,7 @@ import type { Vehicle, VehicleFilters } from '../api/vehicles';
 import { useAuth } from '../auth/auth-context';
 import { useToast } from '../components/toast/toast-context';
 import { Button } from '../components/ui/Button';
+import { RestockDialog } from '../features/admin/RestockDialog';
 import { VehicleFormDialog } from '../features/admin/VehicleFormDialog';
 import { BRAND_NAME } from '../config/brand';
 import { SearchFilters } from '../features/vehicles/SearchFilters';
@@ -30,6 +31,7 @@ export function InventoryPage() {
   const { purchase, isPurchasing } = usePurchase({ onPurchased: replaceVehicle, onStale: retry });
   const { showToast } = useToast();
   const [editing, setEditing] = useState<Vehicle | null>(null);
+  const [restocking, setRestocking] = useState<Vehicle | null>(null);
   const inStock = vehicles.filter((vehicle) => vehicle.quantity > 0).length;
 
   return (
@@ -77,6 +79,7 @@ export function InventoryPage() {
                 purchasing={isPurchasing(vehicle.id)}
                 onPurchase={purchase}
                 onEdit={setEditing}
+                onRestock={setRestocking}
               />
             ))}
           </div>
@@ -84,15 +87,25 @@ export function InventoryPage() {
       </section>
 
       {isAdmin && (
-        <VehicleFormDialog
-          target={editing}
-          onClose={() => setEditing(null)}
-          onSaved={(saved) => {
-            replaceVehicle(saved);
-            setEditing(null);
-            showToast({ message: `Saved ${vehicleTitle(saved)}` });
-          }}
-        />
+        <>
+          <RestockDialog
+            vehicle={restocking}
+            onClose={() => setRestocking(null)}
+            onRestocked={(updated) => {
+              replaceVehicle(updated);
+              setRestocking(null);
+            }}
+          />
+          <VehicleFormDialog
+            target={editing}
+            onClose={() => setEditing(null)}
+            onSaved={(saved) => {
+              replaceVehicle(saved);
+              setEditing(null);
+              showToast({ message: `Saved ${vehicleTitle(saved)}` });
+            }}
+          />
+        </>
       )}
     </>
   );
