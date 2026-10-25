@@ -4,3 +4,5 @@ coverage/
 package-lock.json
 **/prisma/migrations/
 **/src/generated/
+# Raw AI chat log: must stay byte-for-byte unedited.
+PROMPTS.md
